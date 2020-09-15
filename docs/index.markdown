@@ -5,4 +5,3 @@
 layout: home
 ---
 
-# Gauthier Picard's Homepage
