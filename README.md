@@ -1,1 +1,1 @@
-# GauthierPicard.github.io
+# Gauthier Picard's Homepage
