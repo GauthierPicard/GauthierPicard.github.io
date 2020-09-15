@@ -27,7 +27,7 @@ url: "https://gauthierpicard.github.io" # the base hostname & protocol for your 
 github_username:  GauthierPicard
 
 # Build settings
-theme: jekyll-theme-cayman
+theme: jekyll-theme-minimal
 plugins:
   - jekyll-feed
 
