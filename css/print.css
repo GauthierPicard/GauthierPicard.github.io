@@ -1,0 +1,15 @@
+/*.hide_print {
+	display: none;
+}
+
+.no_colour_print {
+	background-color: #FFFFFF;
+}*/
+
+#head {
+	background-color: #FFFFFF;
+}
+
+#footer {
+	display: none;
+}
