@@ -19,9 +19,9 @@
         <script>
 	for (i=2020;i>2018;i--) {
 		$('#pubs').append('<h3>' + i + '</h3>');
-		$('#pubs').append('<div class="publi">');
+		$('#pubs').append('<div class="publi" id="pubs' + i + '">');
 		//$('#pubs').append('<object data="publications/' + i + '.html"></object>');
-    $('#pubs').innerHTML += "<h3>This is the text which has been inserted by JS</h3>";
+    $('#pubs' + i).innerHTML += "<h3>This is the text which has been inserted by JS</h3>";
 		//$(this).load("publications/" + i + ".html");
 		$('#pubs').append("</div>");
 	}
