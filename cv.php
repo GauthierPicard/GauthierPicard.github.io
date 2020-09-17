@@ -1,0 +1,89 @@
+
+	<h3>Academic Activities</h3>
+      <ul>
+        <li><a href="http://onera.fr">ONERA</a>, <a href="https://www.onera.fr/en/dtis">Information Processing and Systems</a> Department, 
+  <a href="https://www.onera.fr/en/dtis/research-units#syd">Smart and decision-making systems</a> Unit
+        </li>
+        <ul>
+          <li>2020 – present, Senior Research Fellow</li>
+        </ul>
+      </ul>
+      <ul>
+      	<li><a href="http://laboratoirehubertcurien.fr/">Laboratoire Hubert Curien CNRS UMR 5516</a>, <a href="https://connected-intelligence.univ-st-etienne.fr/">Connected Intelligence</a> Team, Multi-Agent Systems and Services project
+      	<ul>
+			<li>2015 – 2020, Researcher</li>
+			</ul>
+			</li>
+        <li>Ecole Nationale Supérieure des Mines de Saint-Etienne, <a href=
+        "http://fayol.mines-stetienne.fr">Henri Fayol Institute</a>, <a href=
+        "http://www.mines-stetienne.fr/recherche/departements/departement-informatique-et-systemes-intelligents/">Computer Science and Intelligent Systems</a> Department, France
+
+          <ul>
+						<li>2018 – 2020, Full Professor</li>
+            <li>2007 – 2018, Associate Professor</li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="http://www.irit.fr/" target="_blank">Institute of Research in Computer
+          Science</a>, University of Toulouse III, Toulouse, France
+
+          <ul>
+            <li>2006 - 2007, Researcher and Research and European Relations Engineer</li>
+
+            <li>2004 - 2006, Assistant Lecturer</li>
+
+            <li>2001 - 2004, Researcher (PhD)</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>Education</h3>
+
+      <ul>
+      	<li>2014, Habilitation à diridger des recherches (HDR) in Computer Science (Université Jean Monnet, Saint-Etienne, France)</li>
+        <li>2004, Doctorate in Computer Science (IRIT, Toulouse III, France)</li>
+
+        <li>2001, DEA in Artificial Intelligence (equivalent to MS) (IRIT, Toulouse III,
+        France)</li>
+
+        <li>2000, Maîtrise et Licence in Computer Science (equivalent to BS) (Toulouse III,
+        France)</li>
+
+        <li>1998, DEUG in Mathematics and Computer Science (2-year university degree) (Pau,
+        France)</li>
+
+        <li>1995, Baccalauréat in Mathematics &amp; Physics (secondary school diploma)
+        (Clermont-Fd, France)</li>
+      </ul>
+
+      <h3>Resume</h3>
+
+      <ul>
+        <li>Long resume <a class = "fa fa-file-pdf" href="files/resumel.pdf"></a></li>
+
+        <li>Short resume <a class = "fa fa-file-pdf" href="files/resumes.pdf"></a></li>
+      </ul>
+
+      <h3>Personal</h3>
+
+      <ul>
+        <li>roleplaying games (paper, live...) and particularly within the
+        <!--a href="http://www.incarna.fr/"-->Incarna <!--/a-->
+         association...</li>
+
+        <li>music listening (always and loud...), playing (bass, double bass, guitar, sampling,
+        ...) and arranging...</li>
+
+        <li>vegetarian cooking...</li>
+
+        <li>nature in general...</li>
+      </ul>
+	<p></p>
+
+      <div style="text-align: center;">
+        <img style="text-align: center; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);" height="160"
+        alt="Playing bass" src="./images/GPbass.jpg" />&nbsp;&nbsp;&nbsp;<img style=
+        "text-align: center;box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);" height="160" alt=
+        "Playing double bass" src="./images/GPdoublebass.jpg" />
+      </div>

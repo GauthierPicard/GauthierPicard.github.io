@@ -1,0 +1,13 @@
+<div style="width=100%;">
+	<p>Senior Research Fellow, PhD, HDR<br/>
+	<a href="http://onera.fr">ONERA</a>, <a href="https://www.onera.fr/en/dtis">Information Processing and Systems</a> Department<br/>
+	<a href="https://www.onera.fr/en/dtis/research-units#syd">Smart and decision-making systems</a> Unit</p>
+</div>
+
+<!--table class="logo-tab">
+	<tr>
+		<td style="padding-right: 40px;"><a href="http://laboratoirehubertcurien.fr/"><img src="images/lahc.png" alt="Laboratoire Hubert Curien" class="large-logo"></a></td>
+		<td ><a href="http://www.mines-stetienne.fr/en"><img src="images/minesste.png" alt="MINES Saint-Etienne" class="medium-logo"></a></td>
+		<td style="padding-right: 40px;"><a href="https://connected-intelligence.univ-st-etienne.fr"><img src="images/logoCI.png" alt="Connected Intelligence" class="large-logo"></a></td>
+	</tr>
+</table-->

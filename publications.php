@@ -1,0 +1,25 @@
+<div style="padding-right: 0px;text-align:justify;">
+        <ul>
+          <li>Publications in <a href=
+          "http://www.informatik.uni-trier.de/~ley/db/indices/a-tree/p/Picard:Gauthier.html">DBLP</a></li>
+
+          <li>Publications in <a href="http://scholar.google.fr/citations?user=TudKdPAAAAAJ">Google
+          Scholar</a>
+          <!--a href="http://scholar.google.fr/scholar?hl=fr&amp;num=100&amp;q=authornbsp%3A%22Gauthier+Picard%22&amp;btnG=Rechercher&amp;lr=&amp;as_ylo=&amp;as_vis=0&amp;as_sauthors=&amp;as_publication=&amp;query_as=auth">
+            Google Scholar</a--></li>
+
+          <li>Publications in pdf format <a class="fa fa-file-pdf" href="publications/publications.pdf" id=
+          "publications_pdf"></a></li>
+
+          <li>Publications on the <a href=
+          "https://cv.archives-ouvertes.fr/gauthier-picard">
+          HAL </a> website</li>
+        </ul>
+
+        <?php include("publications/publications_years.html"); ?>
+        <!--
+          include("publications/publications_types.html")
+                -->
+
+
+      </div>

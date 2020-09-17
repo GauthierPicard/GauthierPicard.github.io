@@ -1,0 +1,112 @@
+<h3>Themes</h3>
+
+      <ul>
+        <li><b>Multi-agents systems</b>, and more specifically adaptive multi-agent systems
+        (AMAS)</li>
+
+        <li><b>Distributed optimization</b> by cooperation between agents</li>
+
+        <li><b>Emergence</b> and emergent phenomena</li>
+
+        <li><b>Self-organisation</b>, as a mechanism to design emergent artificial systems</li>
+
+        <li><b>Software engineering</b>, to build such systems</li>
+      </ul>
+
+      <h3>Research Projects</h3>
+
+      <ul>
+      	<li><a href="http://www.ethicaa.org">ETHICAA</a> : Ethics and Autonomous Agents (2013-2016)</li>
+     	<li><a href="https://itea3.org/project/seas.html">SEAS</a> : Smart Energy Aware Systems (2013-2016)</li>
+      	<li><a href="https://iscod.emse.fr/maop/">MAOP</a> : Multi-Agent Oriented Programming (2010-2012)</li>
+      	<li><a href="http://www.irit.fr/id4cs">ID4CS</a> : Integrative Design for Complex Systems (2009-2013)</li>
+      	<li><a href="http://www.web-intelligence-rhone-alpes.org">Web Intelligence</a> (2008-2012)</li>
+      </ul>
+
+      <h3>Supervising</h3>
+
+      <h4>PhD Students</h4>
+
+      <ul>
+
+      	<!--li>M. Legendre (PhD EMSE, 2015-2018): <i>"Multi-agent coordination using distributed optimization based on belief-propagation and dual decomposition"</i></li-->
+        <li><a href="https://www.linkedin.com/in/alaa-daoud-1a4448ab/?originalSubdomain=fr">A. Daoud</a> (PhD Mines Saint-Etienne, 2018-2021): <i>"Decentralized On-Demand Resource Allocation for Autonomous Vehicle Fleets"</i></li>
+        <li><a href="https://www.researchgate.net/profile/Pierre_Rust">P. Rust</a> (PhD Orange Labs, 2015-2018): <i>"Spontaneous coordination of connected objects in the Internet of Things"</i>&nbsp;<a class = "fa fa-file-pdf" href="files/Pierre-Rust-thesis.pdf"></a></li>
+        <li><a href="https://www.researchgate.net/profile/Syed_Gillani4">S. Gillani</a> (PhD TSE, 2013-2016):<i>"Semantically-enabled Stream Processing and Complex Event Processing Over RDF Graph Streams"</i>&nbsp;<a class = "fa fa-file-pdf" href="files/Syed-Gillani-thesis.pdf"></a></li>
+        <li><a href="https://www.researchgate.net/profile/Alexandru_Sorici">A. Sorici</a> (Joint PhD UPB-EMSE, 2012-2015):<i>"Multi-Agent Based Context Management Middleware in Support of Ambient Intelligence Applications"</i>&nbsp;<a class = "fa fa-file-pdf" href="files/Alexandru-Sorici-thesis.pdf"></a></li>
+        <li><a href="http://sites.google.com/site/dvillanu/">D. Villanueva</a> (Joint PhD UF-EMSE,
+        2010-2013): <i>"Reliability Based Design Including Future Tests and Multi-Agent
+        Approaches"</i>&nbsp;<a class = "fa fa-file-pdf" href=
+        "files/VILLANUEVA_DIANE_EMSE.pdf"></a></li>
+        <li><a href="https://www.researchgate.net/profile/Reda_Yaich/publications">R. Yaich</a> (PhD EMSE, 2009-2013):
+        <i>"Adaptiveness and Social-Compliance in Trust Management - A Multi-Agent Based
+        approach"</i>&nbsp;<a class = "fa fa-file-pdf" href="files/Yaich-Reda-thesis.pdf"></a></li>
+        <li><a href="https://www.researchgate.net/profile/Camille_Persson">C. Persson</a> (PhD
+        Orange Labs/EMSE, 2009-2014): <i>"A Decentralized and Distributed Adaptive Governance for Machine-to-Machine Systems - A Multi-Agent Oriented Programming Approach"</i>&nbsp;<a class = "fa fa-file-pdf" href="files/PerssonThesis-A4.pdf"></a></li>
+      </ul>
+
+      <h4>Master Students</h4>
+
+      <ul>
+        <li>L. Cerqueira Martins (Master EMSE/UJM, 2012): <i>"Decentralized stable matching in
+        mixed communities"</i> <a class = "fa fa-file-pdf" href="files/rapport_stageM2_Cerqueira.pdf"><!--img class="pdf" alt=
+        "Master Cerqueira Martins" src="images/pdf.gif"--></a></li>
+
+        <li>A. Sorici (Master Universitatea Politehnica Bucuresti, EURAMUS, 2011): <i>"Dynamic,
+        reactive and pro-active context information aggregation in an AmI environment"</i> <a class = "fa fa-file-pdf" href=
+        "files/thesisSorici.pdf"><!--img class="pdf" alt="Master Sorici" src=
+        "images/pdf.gif" /--></a></li>
+
+        <li>M. Bilal (Master UTT, Orange Labs, 2011): <i>"Multi-agent governance model for M2M
+        networks: Application to a smart parking management system"</i> <a class = "fa fa-file-pdf" href=
+        "files/RapportStageM2RBilal.pdf"><!--img class="pdf" alt="Master Sorici" src=
+        "images/pdf.gif" /--></a></li>
+
+        <li>S. Villarreal (Master EMSE/UJM, 2010): <i>"Distributed constraint-based Optimisation
+        and Social Choice"</i> <a class = "fa fa-file-pdf" href="files/RapportStageM2VillarrealSantiago.pdf"><!--img class=
+        "pdf" alt="M2R Clair" src="images/pdf.gif" /--></a></li>
+
+        <li><a href="http://www710.univ-lyon1.fr/~gclair">G. Clair</a> (Master EMSE/UJM, 2008):
+        <i>"Self-organisation for manufacturing control based on multi-agent systems"</i> <a class = "fa fa-file-pdf" href=
+        "files/RapportStageM2RClairGael.pdf"><!--img class="pdf" alt="M2R Clair" src=
+        "images/pdf.gif" /--></a></li>
+
+        <li><a href="http://www.irit.fr/~Elsy.Kaddoum">E. Kaddoum</a> (Master IRIT/UPS, 2008):
+        <i>"Self-regulation for manufacturing control using self-organising MAS"</i> <a class = "fa fa-file-pdf" href=
+        "ftp://ftp.irit.fr/IRIT/SMAC/DOCUMENTS/RAPPORTS/RapportM2RICSC_ElsyKaddoum.pdf"><!--img class=
+        "pdf" alt="M2R Kaddoum" src="images/pdf.gif" /--></a></li>
+
+        <li>F. Cornet (Master IRIT/UPS, 2006): <i>"Study of a frequency assignment problem using
+        adaptive multi-agent systems"</i> <a class = "fa fa-file-pdf" href=
+        "ftp://ftp.irit.fr/IRIT/SMAC/DOCUMENTS/RAPPORTS/RapportM2RIA_FlorianCornet2006.pdf"><!--img class="pdf"
+        alt="M2R Cornet" src="images/pdf.gif" /--></a></li>
+      </ul>
+
+      <h3>Committees</h3>
+
+        <h4>Chairs</h4>
+
+          <ul>
+          	<li>Program Chair at JFSMA'18, SASO'16, ESAW'09, ESAW'08</li>
+          	<li>Workshop Chair at SASO'15</li>
+            <li>Tutorial Chair at FPIA'19</li>
+          	<li>Doctoral Consortium Chair at SASO'14</li>
+            <li>Steering Committee member for ESAW (Engineering Societies in the Agents World)</li>
+            <li>Session Chair at ROADEF'11 (Session on
+            MDO), IICAI'07 (Session on Multi-Agent Systems)</li>
+            <li>Demo Chair at WI-IAT'11</li>
+            <li>Organisation Chair at SASO'12</li>
+          </ul>
+
+        <h4>Programme Committees</h4>
+
+          <p>AAMAS'20, AAAI'20, ECAI'20, ICSOS'20, IJCAI'20, EPIA'19, PAAMS'19, EXTRAAMAS'19, CP'19, SASO'19, OPTMAS'19, JFSMA'19, AAMAS'19, AAAI'19, ICAART'19, IJCAI'19, AAMAS'18, AAAI'18, ICAART'18, WWW'18 Demo Track, SmartIoT@AAAI'18, AISGSB@AAAI'18, IJCAI-ECAI'18, ICCS'18, CP'18, OPTMAS'18,
+IJCAI'17, OPTMAS'17, SASO'17, JFSMA'17, PRIMA'17, SASO^ST'17, MAS&amp;'16, IBERAMIA'16, OPTMAS'16, AAMAS'15, ISMIS'15, JFSMA'15, MAS&amp;S'15, SASO'15, AHPC'14, AMSTA'14, AAMAS'14, MAS&amp;S'14, ICRA'13, IJCAI'13, JFSMA'13, JFSMA'12, SASO'12, AOSE'12, MAS&amp;S'12, PAAMS'12, AOSE'11, BADS'11, IDETC'11, IICAI'11, SASO'11, AAMAS'10, BADS'10, AOSE'10, SASO'10, WIVE'10, BADS'09, SARC'09, IICAI'09, IAMA'09, SASO'09 (posters), SARC'08, IICAI'07, RJCIA'07, EUMAS'05, ESAW'04, EUMAS'04</p>
+
+            <p><b>Reviewer for</b> Journal of Artificial Intelligence Research (JAIR), Annals of Mathematics and Artificial Intelligence (AMAI), Computational Intelligence (COIN), Autonomous Agents and Multi-Agent Systems Journal (JAAMAS), Journal of Control, Future Generation Computer Systems Journal (FGCS), International Journal of Agent-Oriented Software Engineering (IJAOSE), ACM Transactions on Autonomous and Adaptive Systems (TAAS), Revue d'Intelligence Artificielle (RIA), Simulation Modelling Practice and Theory Journal (SIMPAT), Web Intelligence An International Journal (WIC), International Journal of Production Research (IJPR),
+            AAAI'12, WI-IAT'11, ICRA'10, AOSE'09, ISA'09, AAMAS'08, COIN@AAMAS'08, AOMP'08, APSLA'08, SBIA'08, RFIA'08, COIN@AAMAS'08, AAMAS'05</p>
+
+
+        <h4>Organisation Committee Memberships</h4>
+
+          <p>JFSMA'15, SASO'12, WI-IAT'11, EASSS'10, MALLOW'10, ESAW'09, WI'09 Web Intelligence Summer School, ESAW'08, JFSMA'07, ESAW'04 </p>
