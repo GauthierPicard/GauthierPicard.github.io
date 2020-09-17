@@ -12,7 +12,7 @@
     <title>Gauthier Picard's Homepage</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style/print.css" type="text/css" media="print" />
@@ -36,7 +36,7 @@
     <script>
         $(function(){
             $('[id$="-include"]').each(function (e){
-                $(this).load($(this).attr("id").replace("-include", "") +  ".html");
+                $(this).load("./" + $(this).attr("id").replace("-include", "") +  ".php");
             });
         });
     </script>
