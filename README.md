@@ -1,1 +1,0 @@
-# Gauthier Picard's Homepage
