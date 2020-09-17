@@ -1,7 +1,7 @@
 <script>
 	for (i=2020;i>2000;i--) {
-		$('#pubs').append('<h3>$year</h3>')
-		$('#pubs').append('<div class="publi">')
+		$('#pubs').append('<h3>$year</h3>');
+		$('#pubs').append('<div class="publi">');
 		$(this).load("publications/" + i + ".html");
 		$('#pubs').append("</div>");
 	}
