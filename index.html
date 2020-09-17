@@ -36,7 +36,7 @@
     <script>
         $(function(){
             $('[id$="-include"]').each(function (e){
-                $(this).load("./" + $(this).attr("id").replace("-include", "") +  ".php");
+                $(this).load("pages/" + $(this).attr("id").replace("-include", "") +  ".html");
             });
         });
     </script>
