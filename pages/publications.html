@@ -18,7 +18,7 @@
         
         <script>
 	for (i=2020;i>2018;i--) {
-		$('#pubs').append('<h3>$year</h3>');
+		$('#pubs').append('<h3>' + i + '</h3>');
 		$('#pubs').append('<div class="publi">');
 		$('#pubs').append('<object data="publications/' + i + '.html"></object>');
 		//$(this).load("publications/" + i + ".html");
