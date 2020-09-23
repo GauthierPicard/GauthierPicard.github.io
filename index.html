@@ -209,7 +209,12 @@
     <!-- Footer -->
     <footer>
         <div class="container text-center" style="padding-top: -200px;">
-            <p class="copyright">Copyright &copy; Gauthier Picard <script> new Date().format('m-d-Y h:i:s');</script></p>
+            <p id="copyright" class="copyright">Copyright &copy; Gauthier Picard 
+                <script> 
+                    var d = new Date().toISOString();//.format('m-d-Y h:i:s');
+                    $('#copyright').append(d);
+                </script>
+            </p>
         </div>
     </footer>
 
