@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-04-10 Wed 08:00 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Artificial Intelligence - Chapter 6 with Java</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Gauthier Picard" />
+<link rel="stylesheet" type="text/css" href="https://www.emse.fr/~picard/style/style.css" /><link rel="stylesheet" type="text/css" href="https://www.emse.fr/~picard/style/cours.css" />
+<link rel="stylesheet" type="text/css" href="../styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="../styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="../styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="./styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/hideshow.js"></script>
+<script type="text/javascript" src="../styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Artificial Intelligence - Chapter 6 with Java
+<br>
+<span class="subtitle">MINES Saint-Etienne</span>
+</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#h:3310ACE0-BD3D-48E2-B771-BCD00806AE2D">Introduction</a></li>
+<li><a href="#h:D6D4C40D-0EDF-4B65-9403-4C54D5CE28E3">Modeling CSPs</a></li>
+<li><a href="#h:85968E8D-044E-4786-832A-F2C3B2FACE27">Modeling CSPs: Exercises</a></li>
+<li><a href="#h:0336D8E3-B0CE-4DF4-8760-A960ABFA27E7">Solving algorithms</a></li>
+<li><a href="#h:0136F1B1-523F-49EB-A3B1-B6B75E39415E">Solving CSPs: Exercises</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-h:3310ACE0-BD3D-48E2-B771-BCD00806AE2D" class="outline-2">
+<h2 id="h:3310ACE0-BD3D-48E2-B771-BCD00806AE2D"><a id="orgbc45577"></a>Introduction</h2>
+<div class="outline-text-2" id="text-h:3310ACE0-BD3D-48E2-B771-BCD00806AE2D">
+<p>
+The goal of this tutorial is to understand how to (i) model constraint satisfaction problems and (ii) how to implement the solving algorithms as described in <a href="http://aima.cs.berkeley.edu">AIMA</a>. We take inspiration here from the algorithm provided by <a href="https://github.com/aima-java/aima-java">AIMA-Java Project</a>.
+The slides containing the pseudocode are available <a href="http://www.emse.fr/~picard/cours/ai/chapter06.pdf">here</a>. 
+</p>
+</div>
+
+<!--div id="outline-h:679F20AC-004D-4469-9929-C3C1BCC93B13" class="outline-3 alert">
+<h3 id="h:679F20AC-004D-4469-9929-C3C1BCC93B13"><a id="orgfb8df31"></a>Assignment</h3>
+<div class="outline-text-3" id="text-h:679F20AC-004D-4469-9929-C3C1BCC93B13">
+<p>
+    The lab must be completed on <b>April 24th, 2019</b>. Archive your source code and files and send them to <a class="liensPage" href="#" onmouseover="javascript:printMailTo(this, 'gzzazzuzztzzhzzizzezzrzz.zzpzzizzczzazzrzzdzz#zzezzmzzszzezz.zzfzzrzz', '[TBIA] Chapter 6 &LT;your name&GT;',3)">Gauthier Picard</a> 
+with subject <b>[TBIA] Chapter 6 &lt;your name&gt;</b>. The work will be marked.
+</p>
+</div>
+</div>
+</div-->
+
+<div id="outline-h:D6D4C40D-0EDF-4B65-9403-4C54D5CE28E3" class="outline-2">
+<h2 id="h:D6D4C40D-0EDF-4B65-9403-4C54D5CE28E3"><a id="org688315d"></a>Modeling CSPs</h2>
+<div class="outline-text-2" id="text-h:D6D4C40D-0EDF-4B65-9403-4C54D5CE28E3">
+<p>
+As to focus one the CSP modeling and the implementation of search algorithms, we provide here some reusable code.
+</p>
+</div>
+
+<div id="outline-h:ABC29411-BAB1-4149-B722-42216EA13760" class="outline-3">
+<h3 id="h:ABC29411-BAB1-4149-B722-42216EA13760"><a id="org9c21e6c"></a>The <code>CSP</code> class</h3>
+<div class="outline-text-3" id="text-h:ABC29411-BAB1-4149-B722-42216EA13760">
+<p>
+The first important structure we use is the <code>CSP</code> class. To define a particular problem to solve, you must <i>extend</i> this class.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.csp.<span class="org-constant">core</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">ArrayList</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">Collections</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">Hashtable</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">List</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">CSP</span> {
+
+    <span class="org-keyword">private</span> <span class="org-type">List</span>&lt;<span class="org-type">Variable</span>&gt; <span class="org-variable-name">variables</span>;
+    <span class="org-keyword">private</span> <span class="org-type">List</span>&lt;<span class="org-type">Domain</span>&gt; <span class="org-variable-name">domains</span>;
+    <span class="org-keyword">private</span> <span class="org-type">List</span>&lt;<span class="org-type">Constraint</span>&gt; <span class="org-variable-name">constraints</span>;
+
+    <span class="org-keyword">private</span> <span class="org-type">Hashtable</span>&lt;<span class="org-type">Variable</span>, <span class="org-type">Integer</span>&gt; <span class="org-variable-name">varIndexHash</span>;
+    <span class="org-keyword">private</span> <span class="org-type">Hashtable</span>&lt;<span class="org-type">Variable</span>, <span class="org-type">List</span>&lt;<span class="org-type">Constraint</span>&gt;&gt; <span class="org-variable-name">cnet</span>;
+
+    <span class="org-keyword">public</span> <span class="org-function-name">CSP</span>() {
+        variables = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">Variable</span>&gt;();
+        domains = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">Domain</span>&gt;();
+        constraints = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">Constraint</span>&gt;();
+        varIndexHash = <span class="org-keyword">new</span> <span class="org-type">Hashtable</span>&lt;<span class="org-type">Variable</span>, <span class="org-type">Integer</span>&gt;();
+        cnet = <span class="org-keyword">new</span> <span class="org-type">Hashtable</span>&lt;<span class="org-type">Variable</span>, <span class="org-type">List</span>&lt;<span class="org-type">Constraint</span>&gt;&gt;();
+    }
+
+    <span class="org-keyword">public</span> <span class="org-function-name">CSP</span>(<span class="org-type">List</span>&lt;<span class="org-type">Variable</span>&gt; <span class="org-variable-name">vars</span>) {
+        <span class="org-keyword">this</span>();
+        <span class="org-keyword">for</span> (<span class="org-type">Variable</span> <span class="org-variable-name">v</span> : vars)
+            addVariable(v);
+    }
+
+    <span class="org-keyword">protected</span> <span class="org-type">void</span> <span class="org-function-name">addVariable</span>(<span class="org-type">Variable</span> <span class="org-variable-name">var</span>) {
+        <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>varIndexHash.containsKey(var)) {
+            <span class="org-type">Domain</span> <span class="org-variable-name">emptyDomain</span> = <span class="org-keyword">new</span> <span class="org-type">Domain</span>(Collections.emptyList());
+            variables.add(var);
+            domains.add(emptyDomain);
+            varIndexHash.put(var, variables.size() - 1);
+            cnet.put(var, <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">Constraint</span>&gt;());
+        } <span class="org-keyword">else</span> {
+            <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">IllegalArgumentException</span>(<span class="org-string">"Variable with same name already exists."</span>);
+        }
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">List</span>&lt;<span class="org-type">Variable</span>&gt; <span class="org-function-name">getVariables</span>() {
+        <span class="org-keyword">return</span> Collections.unmodifiableList(variables);
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">int</span> <span class="org-function-name">indexOf</span>(<span class="org-type">Variable</span> <span class="org-variable-name">var</span>) {
+        <span class="org-keyword">return</span> varIndexHash.get(var);
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">Domain</span> <span class="org-function-name">getDomain</span>(<span class="org-type">Variable</span> <span class="org-variable-name">var</span>) {
+        <span class="org-keyword">return</span> domains.get(varIndexHash.get(var));
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">setDomain</span>(<span class="org-type">Variable</span> <span class="org-variable-name">var</span>, <span class="org-type">Domain</span> <span class="org-variable-name">domain</span>) {
+        domains.set(indexOf(var), domain);
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">removeValueFromDomain</span>(<span class="org-type">Variable</span> <span class="org-variable-name">var</span>, <span class="org-type">Object</span> <span class="org-variable-name">value</span>) {
+        <span class="org-type">Domain</span> <span class="org-variable-name">currDomain</span> = getDomain(var);
+        <span class="org-type">List</span>&lt;<span class="org-type">Object</span>&gt; <span class="org-variable-name">values</span> = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">Object</span>&gt;(currDomain.size());
+        <span class="org-keyword">for</span> (<span class="org-type">Object</span> <span class="org-variable-name">v</span> : currDomain)
+            <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>v.equals(value))
+                values.add(v);
+        setDomain(var, <span class="org-keyword">new</span> <span class="org-type">Domain</span>(values));
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">addConstraint</span>(<span class="org-type">Constraint</span> <span class="org-variable-name">constraint</span>) {
+        constraints.add(constraint);
+        <span class="org-keyword">for</span> (<span class="org-type">Variable</span> <span class="org-function-name">var</span> : constraint.getScope())
+            cnet.get(var).add(constraint);
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">List</span>&lt;<span class="org-type">Constraint</span>&gt; <span class="org-function-name">getConstraints</span>() {
+        <span class="org-keyword">return</span> constraints;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">List</span>&lt;<span class="org-type">Constraint</span>&gt; <span class="org-function-name">getConstraints</span>(<span class="org-type">Variable</span> <span class="org-variable-name">var</span>) {
+        <span class="org-keyword">return</span> cnet.get(var);
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">Variable</span> <span class="org-function-name">getNeighbor</span>(<span class="org-type">Variable</span> <span class="org-variable-name">var</span>, <span class="org-type">Constraint</span> <span class="org-variable-name">constraint</span>) {
+        <span class="org-type">List</span>&lt;<span class="org-type">Variable</span>&gt; <span class="org-variable-name">scope</span> = constraint.getScope();
+        <span class="org-keyword">if</span> (scope.size() == 2) {
+            <span class="org-keyword">if</span> (var.equals(scope.get(0)))
+                <span class="org-keyword">return</span> scope.get(1);
+            <span class="org-keyword">else</span> <span class="org-keyword">if</span> (var.equals(scope.get(1)))
+                <span class="org-keyword">return</span> scope.get(0);
+        }
+        <span class="org-keyword">return</span> <span class="org-constant">null</span>;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">CSP</span> <span class="org-function-name">copyDomains</span>() {
+        <span class="org-type">CSP</span> <span class="org-variable-name">result</span> = <span class="org-keyword">new</span> <span class="org-type">CSP</span>();
+        result.variables = variables;
+        result.domains = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">Domain</span>&gt;(domains.size());
+        result.domains.addAll(domains);
+        result.constraints = constraints;
+        result.varIndexHash = varIndexHash;
+        result.cnet = cnet;
+        <span class="org-keyword">return</span> result;
+    }
+}
+</pre>
+</div>
+
+<p>
+This class implements the structure of a CSP, i.e. a set of variables, a set of domains and a set of constraints (and some util methods), as stated in AIMA chapter 6. The variables are defined using the <code>Variable</code> class. In short, a variable is only defined by its name (a <code>String</code>):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.csp.<span class="org-constant">core</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">Variable</span> {
+    <span class="org-keyword">private</span> <span class="org-type">String</span> <span class="org-variable-name">name</span>;
+
+    <span class="org-keyword">public</span> <span class="org-function-name">Variable</span>(<span class="org-type">String</span> <span class="org-variable-name">name</span>) {
+        <span class="org-keyword">this</span>.name = name;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">String</span> <span class="org-function-name">getName</span>() {
+        <span class="org-keyword">return</span> name;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">String</span> <span class="org-function-name">toString</span>() {
+        <span class="org-keyword">return</span> name;
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">equals</span>(<span class="org-type">Object</span> <span class="org-variable-name">obj</span>) {
+        <span class="org-keyword">if</span> (obj == <span class="org-constant">null</span>)
+            <span class="org-keyword">return</span> <span class="org-constant">false</span>;
+        <span class="org-keyword">if</span> (obj.getClass() == getClass())
+            <span class="org-keyword">return</span> <span class="org-keyword">this</span>.name.equals(((<span class="org-type">Variable</span>) obj).name);
+        <span class="org-keyword">return</span> <span class="org-constant">false</span>;
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">int</span> <span class="org-function-name">hashCode</span>() {
+        <span class="org-keyword">return</span> name.hashCode();
+    }
+}
+</pre>
+</div>
+
+<p>
+To define constraints, we need to implement the <code>Constraint</code> interface:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.csp.<span class="org-constant">core</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">List</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">interface</span> <span class="org-type">Constraint</span> {
+    <span class="org-type">List</span>&lt;<span class="org-type">Variable</span>&gt; <span class="org-function-name">getScope</span>();    
+    <span class="org-type">boolean</span> <span class="org-function-name">isSatisfiedWith</span>(<span class="org-type">Assignment</span> <span class="org-variable-name">assignment</span>);
+}
+</pre>
+</div>
+
+<p>
+It has only two methods:
+</p>
+
+<ul class="org-ul">
+<li><code>getScope()</code> which returns the set of variables in the scope of this constraint,</li>
+<li><code>isSatisfiedWith()</code> which returns true if the constraint is satisfied for a given assignment.</li>
+</ul>
+
+<p>
+An <code>Assignment</code> assigns values to some or all variables of a CSP. This class allows to check if the assignment is consistent with some constraints, if it is complete (all variables are assigned), or if it is solution for a given CSP.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.csp.<span class="org-constant">core</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">ArrayList</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">Collections</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">Hashtable</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">List</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">Assignment</span> {
+
+    <span class="org-type">List</span>&lt;<span class="org-type">Variable</span>&gt; <span class="org-variable-name">variables</span>;
+    <span class="org-type">Hashtable</span>&lt;<span class="org-type">Variable</span>, <span class="org-type">Object</span>&gt; <span class="org-variable-name">variableToValue</span>;
+
+    <span class="org-keyword">public</span> <span class="org-function-name">Assignment</span>() {
+        variables = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">Variable</span>&gt;();
+        variableToValue = <span class="org-keyword">new</span> <span class="org-type">Hashtable</span>&lt;<span class="org-type">Variable</span>, <span class="org-type">Object</span>&gt;();
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">List</span>&lt;<span class="org-type">Variable</span>&gt; <span class="org-function-name">getVariables</span>() {
+        <span class="org-keyword">return</span> Collections.unmodifiableList(variables);
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">Object</span> <span class="org-function-name">getAssignment</span>(<span class="org-type">Variable</span> <span class="org-variable-name">var</span>) {
+        <span class="org-keyword">return</span> variableToValue.get(var);
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">setAssignment</span>(<span class="org-type">Variable</span> <span class="org-variable-name">var</span>, <span class="org-type">Object</span> <span class="org-variable-name">value</span>) {
+        <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>variableToValue.containsKey(var))
+            variables.add(var);
+        variableToValue.put(var, value);
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">removeAssignment</span>(<span class="org-type">Variable</span> <span class="org-variable-name">var</span>) {
+        <span class="org-keyword">if</span> (hasAssignmentFor(var)) {
+            variables.remove(var);
+            variableToValue.remove(var);
+        }
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">hasAssignmentFor</span>(<span class="org-type">Variable</span> <span class="org-variable-name">var</span>) {
+        <span class="org-keyword">return</span> variableToValue.get(var) != <span class="org-constant">null</span>;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">isConsistent</span>(<span class="org-type">List</span>&lt;<span class="org-type">Constraint</span>&gt; <span class="org-variable-name">constraints</span>) {
+        <span class="org-keyword">for</span> (<span class="org-type">Constraint</span> <span class="org-variable-name">cons</span> : constraints)
+            <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>cons.isSatisfiedWith(<span class="org-keyword">this</span>))
+                <span class="org-keyword">return</span> <span class="org-constant">false</span>;
+        <span class="org-keyword">return</span> <span class="org-constant">true</span>;
+    }
+
+   <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">isComplete</span>(<span class="org-type">List</span>&lt;<span class="org-type">Variable</span>&gt; <span class="org-variable-name">vars</span>) {
+        <span class="org-keyword">for</span> (<span class="org-type">Variable</span> <span class="org-variable-name">var</span> : vars) {
+            <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>hasAssignmentFor(var))
+                <span class="org-keyword">return</span> <span class="org-constant">false</span>;
+        }
+        <span class="org-keyword">return</span> <span class="org-constant">true</span>;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">isComplete</span>(<span class="org-type">Variable</span>[] <span class="org-variable-name">vars</span>) {
+        <span class="org-keyword">for</span> (<span class="org-type">Variable</span> <span class="org-variable-name">var</span> : vars) {
+            <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>hasAssignmentFor(var))
+                <span class="org-keyword">return</span> <span class="org-constant">false</span>;
+        }
+        <span class="org-keyword">return</span> <span class="org-constant">true</span>;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">isSolution</span>(<span class="org-type">CSP</span> <span class="org-variable-name">csp</span>) {
+        <span class="org-keyword">return</span> isConsistent(csp.getConstraints())
+                &amp;&amp; isComplete(csp.getVariables());
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">Assignment</span> <span class="org-function-name">copy</span>() {
+        <span class="org-type">Assignment</span> <span class="org-variable-name">copy</span> = <span class="org-keyword">new</span> <span class="org-type">Assignment</span>();
+        <span class="org-keyword">for</span> (<span class="org-type">Variable</span> <span class="org-variable-name">var</span> : variables) {
+            copy.setAssignment(var, variableToValue.get(var));
+        }
+        <span class="org-keyword">return</span> copy;
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">String</span> <span class="org-function-name">toString</span>() {
+        <span class="org-type">boolean</span> <span class="org-variable-name">comma</span> = <span class="org-constant">false</span>;
+        <span class="org-type">StringBuffer</span> <span class="org-variable-name">result</span> = <span class="org-keyword">new</span> <span class="org-type">StringBuffer</span>(<span class="org-string">"{"</span>);
+        <span class="org-keyword">for</span> (<span class="org-type">Variable</span> <span class="org-variable-name">var</span> : variables) {
+            <span class="org-keyword">if</span> (comma)
+                result.append(<span class="org-string">", "</span>);
+            result.append(var + <span class="org-string">"="</span> + variableToValue.get(var));
+            comma = <span class="org-constant">true</span>;
+        }
+        result.append(<span class="org-string">"}"</span>);
+        <span class="org-keyword">return</span> result.toString();
+    }
+}
+</pre>
+</div>
+
+<p>
+Variables takes their values within domains. To define them, we need to implement the <code>Domain</code> class, which is a subclass of <code>Iterable</code> (see <a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html">http://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html</a>):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.csp.<span class="org-constant">core</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">ArrayList</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">Iterator</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">List</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">fr</span>.<span class="org-constant">emse</span>.<span class="org-constant">ai</span>.<span class="org-constant">util</span>.<span class="org-type">ArrayIterator</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">Domain</span> <span class="org-keyword">implements</span> <span class="org-type">Iterable</span>&lt;<span class="org-type">Object</span>&gt; {
+
+    <span class="org-keyword">private</span> <span class="org-type">Object</span>[] <span class="org-variable-name">values</span>;
+
+    <span class="org-keyword">public</span> <span class="org-function-name">Domain</span>(<span class="org-type">List</span>&lt;?&gt; <span class="org-variable-name">values</span>) {
+        <span class="org-keyword">this</span>.values = <span class="org-keyword">new</span> <span class="org-type">Object</span>[values.size()];
+        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; values.<span class="org-type">size</span>(); i++)
+            <span class="org-keyword">this</span>.values[i] = values.get(i);
+    }
+
+    <span class="org-keyword">public</span> <span class="org-function-name">Domain</span>(<span class="org-type">Object</span>[] <span class="org-variable-name">values</span>) {
+        <span class="org-keyword">this</span>.values = <span class="org-keyword">new</span> <span class="org-type">Object</span>[values.length];
+        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; values.<span class="org-type">length</span>; i++)
+            <span class="org-keyword">this</span>.values[i] = values[i];
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">int</span> <span class="org-function-name">size</span>() {
+        <span class="org-keyword">return</span> values.length;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">Object</span> <span class="org-function-name">get</span>(<span class="org-type">int</span> <span class="org-variable-name">index</span>) {
+        <span class="org-keyword">return</span> values[index];
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">isEmpty</span>() {
+        <span class="org-keyword">return</span> values.length == 0;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">contains</span>(<span class="org-type">Object</span> <span class="org-variable-name">value</span>) {
+        <span class="org-keyword">for</span> (<span class="org-type">Object</span> <span class="org-variable-name">v</span> : values)
+            <span class="org-keyword">if</span> (v.equals(value))
+                <span class="org-keyword">return</span> <span class="org-constant">true</span>;
+        <span class="org-keyword">return</span> <span class="org-constant">false</span>;
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">Iterator</span>&lt;<span class="org-type">Object</span>&gt; <span class="org-function-name">iterator</span>() {
+        <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">ArrayIterator</span>&lt;<span class="org-type">Object</span>&gt;(values);
+    }
+
+     <span class="org-keyword">public</span> <span class="org-type">List</span>&lt;<span class="org-type">Object</span>&gt; <span class="org-function-name">asList</span>() {
+        <span class="org-type">List</span>&lt;<span class="org-type">Object</span>&gt; <span class="org-variable-name">result</span> = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">Object</span>&gt;();
+        <span class="org-keyword">for</span> (<span class="org-type">Object</span> <span class="org-variable-name">value</span> : values)
+            result.add(value);
+        <span class="org-keyword">return</span> result;
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">equals</span>(<span class="org-type">Object</span> <span class="org-variable-name">obj</span>) {
+        <span class="org-keyword">if</span> (obj <span class="org-keyword">instanceof</span> Domain) {
+            <span class="org-type">Domain</span> <span class="org-variable-name">d</span> = (<span class="org-type">Domain</span>) obj;
+            <span class="org-keyword">if</span> (d.size() != values.length)
+                <span class="org-keyword">return</span> <span class="org-constant">false</span>;
+            <span class="org-keyword">else</span>
+                <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; values.<span class="org-type">length</span>; i++)
+                    <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>values[i].equals(d.values[i]))
+                        <span class="org-keyword">return</span> <span class="org-constant">false</span>;
+        }
+        <span class="org-keyword">return</span> <span class="org-constant">true</span>;
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">int</span> <span class="org-function-name">hashCode</span>() {
+        <span class="org-type">int</span> <span class="org-variable-name">hash</span> = 9; <span class="org-comment-delimiter">// </span><span class="org-comment">arbitrary seed value</span>
+        <span class="org-type">int</span> <span class="org-variable-name">multiplier</span> = 13; <span class="org-comment-delimiter">// </span><span class="org-comment">arbitrary multiplier value</span>
+        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; values.<span class="org-type">length</span>; i++)
+            hash = hash * multiplier + values[i].hashCode();
+        <span class="org-keyword">return</span> hash;
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">String</span> <span class="org-function-name">toString</span>() {
+        <span class="org-type">StringBuffer</span> <span class="org-variable-name">result</span> = <span class="org-keyword">new</span> <span class="org-type">StringBuffer</span>(<span class="org-string">"{"</span>);
+        <span class="org-type">boolean</span> <span class="org-variable-name">comma</span> = <span class="org-constant">false</span>;
+        <span class="org-keyword">for</span> (<span class="org-type">Object</span> <span class="org-variable-name">value</span> : values) {
+            <span class="org-keyword">if</span> (comma)
+                result.append(<span class="org-string">", "</span>);
+            result.append(value.toString());
+            comma = <span class="org-constant">true</span>;
+        }
+        result.append(<span class="org-string">"}"</span>);
+        <span class="org-keyword">return</span> result.toString();
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-h:62D7F647-DC1A-4832-93D6-9D909DF1ABD2" class="outline-3">
+<h3 id="h:62D7F647-DC1A-4832-93D6-9D909DF1ABD2"><a id="org57c07d0"></a>An example of CSP modeling</h3>
+<div class="outline-text-3" id="text-h:62D7F647-DC1A-4832-93D6-9D909DF1ABD2">
+<p>
+To be more concrete, let's take an example of a simple CSP, the graph coloring problem of Australia (see Chapter 6):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.csp.<span class="org-constant">australia</span>;
+
+
+<span class="org-keyword">import</span> <span class="org-constant">fr</span>.<span class="org-constant">emse</span>.<span class="org-constant">ai</span>.<span class="org-constant">csp</span>.<span class="org-constant">core</span>.<span class="org-type">CSP</span>;
+<span class="org-keyword">import</span> <span class="org-constant">fr</span>.<span class="org-constant">emse</span>.<span class="org-constant">ai</span>.<span class="org-constant">csp</span>.<span class="org-constant">core</span>.<span class="org-type">Domain</span>;
+<span class="org-keyword">import</span> <span class="org-constant">fr</span>.<span class="org-constant">emse</span>.<span class="org-constant">ai</span>.<span class="org-constant">csp</span>.<span class="org-constant">core</span>.<span class="org-type">NotEqualConstraint</span>;
+<span class="org-keyword">import</span> <span class="org-constant">fr</span>.<span class="org-constant">emse</span>.<span class="org-constant">ai</span>.<span class="org-constant">csp</span>.<span class="org-constant">core</span>.<span class="org-type">Variable</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">MapCSP</span> <span class="org-keyword">extends</span> <span class="org-type">CSP</span> {
+    <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">Variable</span> <span class="org-variable-name">NSW</span> = <span class="org-keyword">new</span> <span class="org-type">Variable</span>(<span class="org-string">"NSW"</span>);
+    <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">Variable</span> <span class="org-variable-name">NT</span> = <span class="org-keyword">new</span> <span class="org-type">Variable</span>(<span class="org-string">"NT"</span>);
+    <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">Variable</span> <span class="org-variable-name">Q</span> = <span class="org-keyword">new</span> <span class="org-type">Variable</span>(<span class="org-string">"Q"</span>);
+    <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">Variable</span> <span class="org-variable-name">SA</span> = <span class="org-keyword">new</span> <span class="org-type">Variable</span>(<span class="org-string">"SA"</span>);
+    <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">Variable</span> <span class="org-variable-name">T</span> = <span class="org-keyword">new</span> <span class="org-type">Variable</span>(<span class="org-string">"T"</span>);
+    <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">Variable</span> <span class="org-variable-name">V</span> = <span class="org-keyword">new</span> <span class="org-type">Variable</span>(<span class="org-string">"V"</span>);
+    <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">Variable</span> <span class="org-variable-name">WA</span> = <span class="org-keyword">new</span> <span class="org-type">Variable</span>(<span class="org-string">"WA"</span>);
+    <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">String</span> <span class="org-variable-name">RED</span> = <span class="org-string">"RED"</span>;
+    <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">String</span> <span class="org-variable-name">GREEN</span> = <span class="org-string">"GREEN"</span>;
+    <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-keyword">final</span> <span class="org-type">String</span> <span class="org-variable-name">BLUE</span> = <span class="org-string">"BLUE"</span>;
+
+    <span class="org-keyword">public</span> <span class="org-function-name">MapCSP</span>() {
+        addVariable(NSW);
+        addVariable(WA);
+        addVariable(NT);
+        addVariable(Q);
+        addVariable(SA);
+        addVariable(V);
+        addVariable(T);
+
+        <span class="org-type">Domain</span> <span class="org-variable-name">colors</span> = <span class="org-keyword">new</span> <span class="org-type">Domain</span>(<span class="org-keyword">new</span> <span class="org-type">Object</span>[]{RED, GREEN, BLUE});
+
+        <span class="org-keyword">for</span> (<span class="org-type">Variable</span> <span class="org-function-name">var</span> : getVariables())
+            setDomain(var, colors);
+
+        addConstraint(<span class="org-keyword">new</span> <span class="org-type">NotEqualConstraint</span>(WA, NT));
+        addConstraint(<span class="org-keyword">new</span> <span class="org-type">NotEqualConstraint</span>(WA, SA));
+        addConstraint(<span class="org-keyword">new</span> <span class="org-type">NotEqualConstraint</span>(NT, SA));
+        addConstraint(<span class="org-keyword">new</span> <span class="org-type">NotEqualConstraint</span>(NT, Q));
+        addConstraint(<span class="org-keyword">new</span> <span class="org-type">NotEqualConstraint</span>(SA, Q));
+        addConstraint(<span class="org-keyword">new</span> <span class="org-type">NotEqualConstraint</span>(SA, NSW));
+        addConstraint(<span class="org-keyword">new</span> <span class="org-type">NotEqualConstraint</span>(SA, V));
+        addConstraint(<span class="org-keyword">new</span> <span class="org-type">NotEqualConstraint</span>(Q, NSW));
+        addConstraint(<span class="org-keyword">new</span> <span class="org-type">NotEqualConstraint</span>(NSW, V));
+    }
+}
+</pre>
+</div>
+
+<p>
+This problem has a fixed number of variables (one for each state) and non-equality constraints between neighboring states. All the variable have the same domain (red, green, blue). Constraints are defined using a <code>NotEqualConstraint</code> (which implements the <code>Constraint</code> interface) which holds true iff the values of the two constrained variables are different:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.csp.<span class="org-constant">core</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">ArrayList</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">List</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">NotEqualConstraint</span> <span class="org-keyword">implements</span> <span class="org-type">Constraint</span> {
+
+    <span class="org-keyword">private</span> <span class="org-type">Variable</span> <span class="org-variable-name">var1</span>;
+    <span class="org-keyword">private</span> <span class="org-type">Variable</span> <span class="org-variable-name">var2</span>;
+    <span class="org-keyword">private</span> <span class="org-type">List</span>&lt;<span class="org-type">Variable</span>&gt; <span class="org-variable-name">scope</span>;
+
+    <span class="org-keyword">public</span> <span class="org-function-name">NotEqualConstraint</span>(<span class="org-type">Variable</span> <span class="org-variable-name">var1</span>, <span class="org-type">Variable</span> <span class="org-variable-name">var2</span>) {
+        <span class="org-keyword">this</span>.var1 = var1;
+        <span class="org-keyword">this</span>.var2 = var2;
+        scope = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">Variable</span>&gt;(2);
+        scope.add(var1);
+        scope.add(var2);
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">List</span>&lt;<span class="org-type">Variable</span>&gt; <span class="org-function-name">getScope</span>() {
+        <span class="org-keyword">return</span> scope;
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">isSatisfiedWith</span>(<span class="org-type">Assignment</span> <span class="org-variable-name">assignment</span>) {
+        <span class="org-type">Object</span> <span class="org-variable-name">value1</span> = assignment.getAssignment(var1);
+        <span class="org-keyword">return</span> value1 == <span class="org-constant">null</span> || <span class="org-negation-char">!</span>value1.equals(assignment.getAssignment(var2));
+    }
+}
+</pre>
+</div>
+
+<p>
+Look carefully at this example.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-h:85968E8D-044E-4786-832A-F2C3B2FACE27" class="outline-2">
+<h2 id="h:85968E8D-044E-4786-832A-F2C3B2FACE27"><a id="org5d7bd99"></a>Modeling CSPs: Exercises</h2>
+<div class="outline-text-2" id="text-h:85968E8D-044E-4786-832A-F2C3B2FACE27">
+</div>
+
+<div id="outline-h:16A2233D-31F1-470D-8D1D-8578A6D7ED68" class="outline-3 exo">
+<h3 id="h:16A2233D-31F1-470D-8D1D-8578A6D7ED68"><a id="orga7ad19a"></a>Exercise 1</h3>
+<div class="outline-text-3" id="text-h:16A2233D-31F1-470D-8D1D-8578A6D7ED68">
+<p>
+Download the <a href="http://www.emse.fr/~picard/cours/ai/csp/chapter6-src.zip">provided code</a> and import it in a new project. Model and implement the 4-queens problem using this framework. (Hint: you will require to define a specific <code>Constraint</code> subclass)
+</p>
+</div>
+</div>
+
+<div id="outline-h:E4803D43-829B-4CF4-9E32-84140C5B95C1" class="outline-3 exo">
+<h3 id="h:E4803D43-829B-4CF4-9E32-84140C5B95C1"><a id="org09b1699"></a>Exercise 2</h3>
+<div class="outline-text-3" id="text-h:E4803D43-829B-4CF4-9E32-84140C5B95C1">
+<p>
+Model and implement the n-queens problem using this framework. (Hint: you will require to specify a constructor with an integer parameter to set the size)
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-h:0336D8E3-B0CE-4DF4-8760-A960ABFA27E7" class="outline-2">
+<h2 id="h:0336D8E3-B0CE-4DF4-8760-A960ABFA27E7"><a id="orgf2147ca"></a>Solving algorithms</h2>
+<div class="outline-text-2" id="text-h:0336D8E3-B0CE-4DF4-8760-A960ABFA27E7">
+<p>
+Solving CSP requires implementing the algorithms we taught in class. 
+</p>
+</div>
+
+<div id="outline-h:1EAFD6E5-AE2C-4B59-9D20-DA263C07176E" class="outline-3">
+<h3 id="h:1EAFD6E5-AE2C-4B59-9D20-DA263C07176E"><a id="org5295523"></a>The <code>SolutionStrategy</code> abstract class</h3>
+<div class="outline-text-3" id="text-h:1EAFD6E5-AE2C-4B59-9D20-DA263C07176E">
+<p>
+To code a CSP solver, one should extend the <code>SolutionStrategy</code> abstract class. It essentially defines a <code>solve()</code> method that returns an assignment for a given CSP. It also provides some util methods to trace step-by-step the solving process, using the <code>CSPStateListener</code> interface (see provided code).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.csp.<span class="org-constant">core</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">ArrayList</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">List</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">abstract</span> <span class="org-keyword">class</span> <span class="org-type">SolutionStrategy</span> {
+    <span class="org-type">List</span>&lt;<span class="org-type">CSPStateListener</span>&gt; <span class="org-variable-name">listeners</span> = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">CSPStateListener</span>&gt;();
+
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">addCSPStateListener</span>(<span class="org-type">CSPStateListener</span> <span class="org-variable-name">listener</span>) {
+        listeners.add(listener);
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">removeCSPStateListener</span>(<span class="org-type">CSPStateListener</span> <span class="org-variable-name">listener</span>) {
+        listeners.remove(listener);
+    }
+
+    <span class="org-keyword">protected</span> <span class="org-type">void</span> <span class="org-function-name">fireStateChanged</span>(<span class="org-type">CSP</span> <span class="org-variable-name">csp</span>) {
+        <span class="org-keyword">for</span> (<span class="org-type">CSPStateListener</span> <span class="org-variable-name">listener</span> : listeners)
+            listener.stateChanged(csp.copyDomains());
+    }
+
+    <span class="org-keyword">protected</span> <span class="org-type">void</span> <span class="org-function-name">fireStateChanged</span>(<span class="org-type">Assignment</span> <span class="org-variable-name">assignment</span>, <span class="org-type">CSP</span> <span class="org-variable-name">csp</span>) {
+        <span class="org-keyword">for</span> (<span class="org-type">CSPStateListener</span> <span class="org-variable-name">listener</span> : listeners)
+            listener.stateChanged(assignment.copy(), csp.copyDomains());
+    }
+
+    <span class="org-keyword">public</span> <span class="org-keyword">abstract</span> <span class="org-type">Assignment</span> <span class="org-function-name">solve</span>(<span class="org-type">CSP</span> <span class="org-variable-name">csp</span>);
+}
+</pre>
+</div>
+
+<p>
+An example of solution strategy, as presented in AIMA chapter 6, is backtracking algorithm. You can note that when an assignment is done, the <code>fireStateChanged(assignment, csp)</code> method is triggered, so that another class listening to this one can trace, step-by-step, the solving process (investigate this technique by yourself).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.csp.<span class="org-constant">core</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">BacktrackingStrategy</span> <span class="org-keyword">extends</span> <span class="org-type">SolutionStrategy</span> {
+
+    <span class="org-keyword">public</span> <span class="org-type">Assignment</span> <span class="org-function-name">solve</span>(<span class="org-type">CSP</span> <span class="org-variable-name">csp</span>) {
+        <span class="org-keyword">return</span> recursiveBackTrackingSearch(csp, <span class="org-keyword">new</span> <span class="org-type">Assignment</span>());
+    }
+
+    <span class="org-keyword">private</span> <span class="org-type">Assignment</span> <span class="org-function-name">recursiveBackTrackingSearch</span>(<span class="org-type">CSP</span> <span class="org-variable-name">csp</span>,
+                                                   <span class="org-type">Assignment</span> <span class="org-variable-name">assignment</span>) {
+        <span class="org-type">Assignment</span> <span class="org-variable-name">result</span> = <span class="org-constant">null</span>;
+        <span class="org-keyword">if</span> (assignment.isComplete(csp.getVariables())) {
+            result = assignment;
+        } <span class="org-keyword">else</span> {
+            <span class="org-type">Variable</span> <span class="org-variable-name">var</span> = selectUnassignedVariable(assignment, csp);
+            <span class="org-keyword">for</span> (<span class="org-type">Object</span> <span class="org-function-name">value</span> : orderDomainValues(var, assignment, csp)) {
+                assignment.setAssignment(var, value);
+                fireStateChanged(assignment, csp);
+                <span class="org-keyword">if</span> (assignment.isConsistent(csp.getConstraints(var))) {
+                    <span class="org-type">DomainRestoreInfo</span> <span class="org-variable-name">info</span> = inference(var, assignment, csp);
+                    <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>info.isEmpty())
+                        fireStateChanged(csp);
+                    <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>info.isEmptyDomainFound()) {
+                        result = recursiveBackTrackingSearch(csp, assignment);
+                        <span class="org-keyword">if</span> (result != <span class="org-constant">null</span>)
+                            <span class="org-keyword">break</span>;
+                    }
+                    info.restoreDomains(csp);
+                }
+                assignment.removeAssignment(var);
+            }
+        }
+        <span class="org-keyword">return</span> result;
+    }
+
+    <span class="org-keyword">protected</span> <span class="org-type">Variable</span> <span class="org-function-name">selectUnassignedVariable</span>(<span class="org-type">Assignment</span> <span class="org-variable-name">assignment</span>, <span class="org-type">CSP</span> <span class="org-variable-name">csp</span>) {
+        <span class="org-keyword">for</span> (<span class="org-type">Variable</span> <span class="org-function-name">var</span> : csp.getVariables()) {
+            <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>(assignment.hasAssignmentFor(var)))
+                <span class="org-keyword">return</span> var;
+        }
+        <span class="org-keyword">return</span> <span class="org-constant">null</span>;
+    }
+
+    <span class="org-keyword">protected</span> <span class="org-type">Iterable</span>&lt;?&gt; <span class="org-function-name">orderDomainValues</span>(<span class="org-type">Variable</span> <span class="org-variable-name">var</span>,
+                                            <span class="org-type">Assignment</span> <span class="org-variable-name">assignment</span>, <span class="org-type">CSP</span> <span class="org-variable-name">csp</span>) {
+        <span class="org-keyword">return</span> csp.getDomain(var);
+    }
+
+    <span class="org-keyword">protected</span> <span class="org-type">DomainRestoreInfo</span> <span class="org-function-name">inference</span>(<span class="org-type">Variable</span> <span class="org-variable-name">var</span>, <span class="org-type">Assignment</span> <span class="org-variable-name">assignment</span>,
+                                          <span class="org-type">CSP</span> <span class="org-variable-name">csp</span>) {
+        <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">DomainRestoreInfo</span>().compactify();
+    }
+}
+</pre>
+</div>
+
+<p>
+To solve a CSP, you only have to call the <code>solve()</code> method. For instance, to solve the map coloring problem, you can code:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-type">MapCSP</span> <span class="org-variable-name">map</span> = <span class="org-keyword">new</span> <span class="org-type">MapCSP</span>();
+<span class="org-type">BacktrackingStrategy</span> <span class="org-variable-name">bts</span> = <span class="org-keyword">new</span> <span class="org-type">BacktrackingStrategy</span>();
+bts.addCSPStateListener(<span class="org-keyword">new</span> <span class="org-type">CSPStateListener</span>() {
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">stateChanged</span>(<span class="org-type">Assignment</span> <span class="org-variable-name">assignment</span>, <span class="org-type">CSP</span> <span class="org-variable-name">csp</span>) {
+        System.out.println(<span class="org-string">"Assignment evolved : "</span> + assignment);
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">stateChanged</span>(<span class="org-type">CSP</span> <span class="org-variable-name">csp</span>) {
+        System.out.println(<span class="org-string">"CSP evolved : "</span> + csp);
+    }
+});
+<span class="org-type">double</span> <span class="org-variable-name">start</span> = System.currentTimeMillis();
+<span class="org-type">Assignment</span> <span class="org-variable-name">sol</span> = bts.solve(map);
+<span class="org-type">double</span> <span class="org-variable-name">end</span> = System.currentTimeMillis();
+System.out.println(sol);
+System.out.println(<span class="org-string">"Time to solve = "</span> + (end - start));
+</pre>
+</div>
+
+<p>
+which will return:
+</p>
+
+<pre class="example">
+Assignment evolved : {NSW=RED}
+Assignment evolved : {NSW=RED, WA=RED}
+Assignment evolved : {NSW=RED, WA=RED, NT=RED}
+Assignment evolved : {NSW=RED, WA=RED, NT=GREEN}
+Assignment evolved : {NSW=RED, WA=RED, NT=GREEN, Q=RED}
+Assignment evolved : {NSW=RED, WA=RED, NT=GREEN, Q=GREEN}
+Assignment evolved : {NSW=RED, WA=RED, NT=GREEN, Q=BLUE}
+Assignment evolved : {NSW=RED, WA=RED, NT=GREEN, Q=BLUE, SA=RED}
+Assignment evolved : {NSW=RED, WA=RED, NT=GREEN, Q=BLUE, SA=GREEN}
+Assignment evolved : {NSW=RED, WA=RED, NT=GREEN, Q=BLUE, SA=BLUE}
+Assignment evolved : {NSW=RED, WA=RED, NT=BLUE}
+Assignment evolved : {NSW=RED, WA=RED, NT=BLUE, Q=RED}
+Assignment evolved : {NSW=RED, WA=RED, NT=BLUE, Q=GREEN}
+Assignment evolved : {NSW=RED, WA=RED, NT=BLUE, Q=GREEN, SA=RED}
+Assignment evolved : {NSW=RED, WA=RED, NT=BLUE, Q=GREEN, SA=GREEN}
+Assignment evolved : {NSW=RED, WA=RED, NT=BLUE, Q=GREEN, SA=BLUE}
+Assignment evolved : {NSW=RED, WA=RED, NT=BLUE, Q=BLUE}
+Assignment evolved : {NSW=RED, WA=GREEN}
+Assignment evolved : {NSW=RED, WA=GREEN, NT=RED}
+Assignment evolved : {NSW=RED, WA=GREEN, NT=RED, Q=RED}
+Assignment evolved : {NSW=RED, WA=GREEN, NT=RED, Q=GREEN}
+Assignment evolved : {NSW=RED, WA=GREEN, NT=RED, Q=GREEN, SA=RED}
+Assignment evolved : {NSW=RED, WA=GREEN, NT=RED, Q=GREEN, SA=GREEN}
+Assignment evolved : {NSW=RED, WA=GREEN, NT=RED, Q=GREEN, SA=BLUE}
+Assignment evolved : {NSW=RED, WA=GREEN, NT=RED, Q=GREEN, SA=BLUE, V=RED}
+Assignment evolved : {NSW=RED, WA=GREEN, NT=RED, Q=GREEN, SA=BLUE, V=GREEN}
+Assignment evolved : {NSW=RED, WA=GREEN, NT=RED, Q=GREEN, SA=BLUE, V=GREEN, T=RED}
+{NSW=RED, WA=GREEN, NT=RED, Q=GREEN, SA=BLUE, V=GREEN, T=RED}
+Time to solve = 6.0
+</pre>
+
+<p>
+Other algorithms are provided (<code>MinConflictsStrategy</code> to solve CSP and <code>AC3Strategy</code> to reduce domains). Inspect carefully the provided code so that you can use all these classes.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-h:0136F1B1-523F-49EB-A3B1-B6B75E39415E" class="outline-2">
+<h2 id="h:0136F1B1-523F-49EB-A3B1-B6B75E39415E"><a id="org4b7a58f"></a>Solving CSPs: Exercises</h2>
+<div class="outline-text-2" id="text-h:0136F1B1-523F-49EB-A3B1-B6B75E39415E">
+</div>
+
+<div id="outline-h:892B12B5-9B9D-46F5-A1E7-CB0A69B77959" class="outline-3 exo">
+<h3 id="h:892B12B5-9B9D-46F5-A1E7-CB0A69B77959"><a id="orga6b8d0f"></a>Exercise 3</h3>
+<div class="outline-text-3" id="text-h:892B12B5-9B9D-46F5-A1E7-CB0A69B77959">
+<p>
+Compare backtracking and min-conflict heuristic performances on the <i>n</i>-queens problem, with increasing values for <i>n</i>. 
+</p>
+</div>
+</div>
+
+<div id="outline-h:C303B947-8181-46A6-A721-01B227A38C6C" class="outline-3 exo">
+<h3 id="h:C303B947-8181-46A6-A721-01B227A38C6C"><a id="orgf564535"></a>Exercise 4</h3>
+<div class="outline-text-3" id="text-h:C303B947-8181-46A6-A721-01B227A38C6C">
+<p>
+Use AC-3 algorithm to reduce domains, and compare again the algorithms performances.
+</p>
+</div>
+</div>
+
+<div id="outline-h:FE90E1AF-3F69-46F6-B476-F0CAAC5B71A6" class="outline-3 exo">
+<h3 id="h:FE90E1AF-3F69-46F6-B476-F0CAAC5B71A6"><a id="orgabe923c"></a>Exercise 5</h3>
+<div class="outline-text-3" id="text-h:FE90E1AF-3F69-46F6-B476-F0CAAC5B71A6">
+<p>
+Implement the (i) Minimum remaining values, the (ii) Degree and the (iii) least constraining value heuristics. Check again the performances of our algorithms.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Gauthier Picard</p>
+<p class="email">Email: <a href="mailto:picard@emse.fr">picard@emse.fr</a></p>
+<p class="date">Created: 2019-04-10 Wed 08:00</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

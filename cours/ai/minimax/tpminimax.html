@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet"
+href="http://www.emse.fr/~picard/style/style.css" type="text/css" />
+<link rel="stylesheet" href="http://www.emse.fr/~picard/style/org.css" type="text/css" />
+<link rel="stylesheet" href="http://www.emse.fr/~picard/style/print.css"
+	type="text/css" media="print" />
+<link rel="shortcut icon" href="http://www.emse.fr/~picard/images/favicon.ico" />
+<script type="text/javascript" src="http://www.emse.fr/~picard/files/myScripts.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+<meta name="Author" content="Gauthier Picard" />
+<title>Artificial Intelligence - Implementing Minimax with Prolog</title>
+
+</head>
+<body class="no_colour_print">
+<div id="maindiv">
+<div id="head" class="no_colour_print">
+
+<h1 class="maintitle">Artificial Intelligence - Implementing Minimax with Prolog</h1>
+<h2 class="mainsubtitle">Mines Saint-&Eacute;tienne - Toolbox ICM</h2>
+</div>
+
+<!--div id="menu" class="hide_print">
+      <a href="index.html" class=
+      "menuItem">Presentation</a>&nbsp;&nbsp; <a href="http://www.emse.fr/~picard/cours/ai/#sec-2"
+      class="menuItem">UP1</a>&nbsp;&nbsp; <a href="http://www.emse.fr/~picard/cours/ai/#sec-3"
+      class="menuItem">UP2</a>&nbsp;&nbsp; <a href="http://www.emse.fr/~picard/cours/ai/#sec-4"
+      class="menuItem">UP3</a>&nbsp;&nbsp; <a href="http://www.emse.fr/~picard/cours/ai/#sec-5"
+      class="menuItem">UP4</a>&nbsp;&nbsp; <!--a href="links.html"
+      class="menuItem">Links</a-->&nbsp;&nbsp;
+    </div-->
+<div id="content">
+
+<!--h1>Presentation</h1-->
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">Introduction</a></li>
+<li><a href="#sec-2">Minimax step-by-step</a></li>
+<li><a href="#sec-3">Tic-tac-toe instantiation</a></li>
+<li><a href="#sec-4">Exercises</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The goal of this tutorial is to understand how to implement the <code>minimax</code> algorithm as described in <a href="http://aima.cs.berkeley.edu">AIMA</a>. We take inspiration here from the algorithm provided by <a href="http://catalogue.pearsoned.co.uk/educator/product/Prolog-Programming-for-Artificial-Intelligence/9780321417466.page">Bratko</a>.
+The slides containing the pseudocode are available <a href="http://www.emse.fr/~picard/cours/ai/chapter05.pdf">here</a>. 
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Minimax step-by-step</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The <code>minimax</code> algorithm is recursive by nature. The terminal case (second <code>minimax</code> rule) is triggered when the analyzed state (<code>Pos</code>) has no successors. In this case, the evaluation of the state is the utility of this leaf. The recursive case (first <code>minimax</code> rule) is triggered when the analyzed state has successors. In this case, <code>minimax</code> generates the list<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup> of all the successors obtained by applying all the possible moves from <code>Pos</code> (<code>NextPosList</code>), and looks for the best successors in this list (<code>BestNextPos</code>) with the best value (<code>Val</code>).
+</p>
+<div class="org-src-container">
+<pre class="src src-prolog"><span class="org-function-name">minimax</span>(<span class="org-variable-name">Pos</span>, <span class="org-variable-name">BestNextPos</span>, <span class="org-variable-name">Val</span>) :-                     <span class="org-comment">% Pos has successors</span>
+    bagof(<span class="org-variable-name">NextPos</span>, move(<span class="org-variable-name">Pos</span>, <span class="org-variable-name">NextPos</span>), <span class="org-variable-name">NextPosList</span>),
+    best(<span class="org-variable-name">NextPosList</span>, <span class="org-variable-name">BestNextPos</span>, <span class="org-variable-name">Val</span>), <span class="org-keyword">!</span>.
+
+<span class="org-function-name">minimax</span>(<span class="org-variable-name">Pos</span>, <span class="org-variable-name">_</span>, <span class="org-variable-name">Val</span>) :-                     <span class="org-comment">% Pos has no successors</span>
+    utility(<span class="org-variable-name">Pos</span>, <span class="org-variable-name">Val</span>).
+</pre>
+</div>
+<p>
+Notice that rules <code>utility</code> and <code>move</code> are problem-dependent, and will need to be defined when implementing a particular game. However, we can define the <code>best</code> predicate like this: 
+</p>
+<div class="org-src-container">
+<pre class="src src-prolog"><span class="org-function-name">best</span>(<span class="org-keyword">[</span><span class="org-variable-name">Pos</span><span class="org-keyword">]</span>, <span class="org-variable-name">Pos</span>, <span class="org-variable-name">Val</span>) :-                                <span class="org-comment">% There is no more position to compare</span>
+    minimax(<span class="org-variable-name">Pos</span>, <span class="org-variable-name">_</span>, <span class="org-variable-name">Val</span>), <span class="org-keyword">!</span>.
+
+<span class="org-function-name">best</span>(<span class="org-keyword">[</span><span class="org-variable-name">Pos1</span> <span class="org-keyword">|</span> <span class="org-variable-name">PosList</span><span class="org-keyword">]</span>, <span class="org-variable-name">BestPos</span>, <span class="org-variable-name">BestVal</span>) :-             <span class="org-comment">% There are other positions to compare</span>
+    minimax(<span class="org-variable-name">Pos1</span>, <span class="org-variable-name">_</span>, <span class="org-variable-name">Val1</span>),
+    best(<span class="org-variable-name">PosList</span>, <span class="org-variable-name">Pos2</span>, <span class="org-variable-name">Val2</span>),
+    betterOf(<span class="org-variable-name">Pos1</span>, <span class="org-variable-name">Val1</span>, <span class="org-variable-name">Pos2</span>, <span class="org-variable-name">Val2</span>, <span class="org-variable-name">BestPos</span>, <span class="org-variable-name">BestVal</span>).
+</pre>
+</div>
+<p>
+The first rule concerns the case when there is only one state (<code>Pos</code>) to compare: its value is its <code>minimax</code> evaluation. The second rule corresponds to the case when there are still states (<code>PosList</code>) to analyze after the current one (<code>Pos1</code>). In this case, <code>Pos1</code> is evaluated and compared (using the <code>betterOf</code> rule, see later) to the best one from the <code>PosList</code>. The best one from these two is returned.
+</p>
+<p>
+To compare two states given their evaluation, we define the <code>betterOf</code> predicate, as follows:
+</p>
+<div class="org-src-container">
+<pre class="src src-prolog"><span class="org-function-name">betterOf</span>(<span class="org-variable-name">Pos0</span>, <span class="org-variable-name">Val0</span>, <span class="org-variable-name">_</span>, <span class="org-variable-name">Val1</span>, <span class="org-variable-name">Pos0</span>, <span class="org-variable-name">Val0</span>) :-   <span class="org-comment">% Pos0 better than Pos1</span>
+    min_to_move(<span class="org-variable-name">Pos0</span>),                         <span class="org-comment">% MIN to move in Pos0</span>
+    <span class="org-variable-name">Val0</span> &gt; <span class="org-variable-name">Val1</span>, <span class="org-keyword">!</span>.                            <span class="org-comment">% MAX prefers the greater value</span>
+
+<span class="org-function-name">betterOf</span>(<span class="org-variable-name">Pos0</span>, <span class="org-variable-name">Val0</span>, <span class="org-variable-name">_</span>, <span class="org-variable-name">Val1</span>, <span class="org-variable-name">Pos0</span>, <span class="org-variable-name">Val0</span>) :-   <span class="org-comment">% Pos0 better than Pos1</span>
+    max_to_move(<span class="org-variable-name">Pos0</span>),                         <span class="org-comment">% MAX to move in Pos0</span>
+    <span class="org-variable-name">Val0</span> &lt; <span class="org-variable-name">Val1</span>, <span class="org-keyword">!</span>.                            <span class="org-comment">% MIN prefers the lesser value</span>
+
+<span class="org-function-name">betterOf</span>(<span class="org-variable-name">_</span>, <span class="org-variable-name">_</span>, <span class="org-variable-name">Pos1</span>, <span class="org-variable-name">Val1</span>, <span class="org-variable-name">Pos1</span>, <span class="org-variable-name">Val1</span>).        <span class="org-comment">% Otherwise Pos1 better than Pos0</span>
+</pre>
+</div>
+<p>
+Now, we have a generic <code>minimax</code> engine (we can download it as a prolog module <a href="./minimax.pl">here</a>) that can be used for developing any game, by providing the proper definitions for the following rules :
+</p>
+<ul class="org-ul">
+<li><code>move(+Pos, -NextPos)</code> : states that <code>NextPos</code> is a legal move from <code>Pos</code>
+</li>
+<li><code>utility(+Pos, -Val)</code> : states that <code>Pos</code> as a value equal to <code>Val</code>
+</li>
+<li><code>min_to_move(+Pos)</code> : states that the current player in <code>Pos</code> is <i>min</i>
+</li>
+<li><code>max_to_move(+Pos)</code> : states that the current player in <code>Pos</code> is <i>max</i>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Tic-tac-toe instantiation</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+As aforementioned, if we want to develop an AI for playing a specific game, we need to define some predicates.
+We are interested here to develop the well-known <a href="http://en.wikipedia.org/wiki/Tic-tac-toe"><i>tic-tac-toe</i> game</a>. 
+</p>
+</div>
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1">Game engine</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+As to test your implementation, we provide <a href="./tictactoe-game.pl">here</a> a game engine<sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup> that will drive the game between a human and the computer.
+</p>
+<p>
+To use it, launch prolog, consult <code>tictactoc-game.pl</code> and type :
+</p>
+<pre class="example">
+?- play.
+</pre>
+<p>
+You will be asked for interaction. Follow the game, until the end :
+</p>
+<pre class="example">
+====================
+= Prolog TicTacToe =
+====================
+
+Rem : x starts the game
+
+Color for human player ? (x or o)
+|: x.
+
+     |   |  
+  -----------
+     |   |  
+  -----------
+     |   |  
+
+
+Next move ?
+|: 1.
+
+   x |   |  
+  -----------
+     |   |  
+  -----------
+     |   |  
+
+Computer play : 
+
+   x |   |  
+  -----------
+     | o |  
+  -----------
+     |   |  
+
+Next move ?
+|: 2.
+
+   x | x |  
+  -----------
+     | o |  
+  -----------
+     |   |  
+
+Computer play : 
+
+   x | x | o
+  -----------
+     | o |  
+  -----------
+     |   |  
+
+Next move ?
+|: 4.
+
+   x | x | o
+  -----------
+   x | o |  
+  -----------
+     |   |  
+
+Computer play : 
+
+   x | x | o
+  -----------
+   x | o |  
+  -----------
+   o |   |  
+
+End of game : o win !
+
+true.
+</pre>
+<p>
+To use this engine, we will develop the <code>tictactoe.pl</code> module defining all the required predicates.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2">State representation</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+The engine relies on a specific state representation that we will use in our predicates. 
+</p>
+<p>
+We represent a game position by a list <code>[Player, State, Board]</code>, where 
+</p>
+<ul class="org-ul">
+<li><code>Player</code> is the next player to play
+</li>
+<li><code>State</code> is equal to '<code>play</code>' if not final state, '<code>win</code>' if win or '<code>draw</code>' if draw
+</li>
+<li><code>Board</code> is the actual board of the game
+</li>
+</ul>
+<p>
+The board is represented by a list of 9 elements (the first 3 elements are the first line of the board, &#x2026;). An empty case is represented by '<code>0</code>'. We choose <code>x</code> to be the MAX player and <code>o</code> the MIN player.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3">Tic-tac-toe predicates</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+As aforementioned, we need to define <code>move/2</code>, <code>min_to_move/1</code>, <code>max_to_move/1</code>, <code>utility/2</code> (which are required by <code>minimax</code> module and we also need to define <code>winPos/2</code> and <code>drawPos/2</code> that are used by the game engine.
+</p>
+<p>
+<code>min_to_move/1</code> and <code>max_to_move/1</code> are easy to implement,because of our state representation (it only depends on the first element of the state, a.k.a. the current player) :
+</p>
+<div class="org-src-container">
+<pre class="src src-prolog"><span class="org-function-name">min_to_move</span>(<span class="org-keyword">[</span>o, <span class="org-variable-name">_</span>, <span class="org-variable-name">_</span><span class="org-keyword">]</span>).
+
+<span class="org-function-name">max_to_move</span>(<span class="org-keyword">[</span>x, <span class="org-variable-name">_</span>, <span class="org-variable-name">_</span><span class="org-keyword">]</span>).
+</pre>
+</div>
+<p>
+Defining utility is quite straightforward here since we are developing the entire game tree and evaluating only leafs (terminal states) :
+</p>
+<div class="org-src-container">
+<pre class="src src-prolog"><span class="org-function-name">utility</span>(<span class="org-keyword">[</span>o, win, <span class="org-variable-name">_</span><span class="org-keyword">]</span>, 1).       <span class="org-comment">% Previous player (MAX) has win.</span>
+<span class="org-function-name">utility</span>(<span class="org-keyword">[</span>x, win, <span class="org-variable-name">_</span><span class="org-keyword">]</span>, -1).      <span class="org-comment">% Previous player (MIN) has win.</span>
+<span class="org-function-name">utility</span>(<span class="org-keyword">[</span><span class="org-variable-name">_</span>, draw, <span class="org-variable-name">_</span><span class="org-keyword">]</span>, 0).
+</pre>
+</div>
+<p>
+Let's now define what are terminal states (win or draw positions). A draw position consists in a state in which the board is full, i.e. contains no <code>0</code> : 
+</p>
+<div class="org-src-container">
+<pre class="src src-prolog"><span class="org-function-name">drawPos</span>(<span class="org-variable-name">_</span>,<span class="org-variable-name">Board</span>) :-
+    \+ member(0, <span class="org-variable-name">Board</span>).
+</pre>
+</div>
+<p>
+A win position consists in a state where three <code>x</code> or three <code>o</code> are aligned (in row, in column or in diagonal) on the board :
+</p>
+<div class="org-src-container">
+<pre class="src src-prolog"><span class="org-function-name">winPos</span>(<span class="org-variable-name">P</span>, <span class="org-keyword">[</span><span class="org-variable-name">X1</span>, <span class="org-variable-name">X2</span>, <span class="org-variable-name">X3</span>, <span class="org-variable-name">X4</span>, <span class="org-variable-name">X5</span>, <span class="org-variable-name">X6</span>, <span class="org-variable-name">X7</span>, <span class="org-variable-name">X8</span>, <span class="org-variable-name">X9</span><span class="org-keyword">]</span>) :-
+    equal(<span class="org-variable-name">X1</span>, <span class="org-variable-name">X2</span>, <span class="org-variable-name">X3</span>, <span class="org-variable-name">P</span>) <span class="org-keyword">;</span>    <span class="org-comment">% 1st line</span>
+    equal(<span class="org-variable-name">X4</span>, <span class="org-variable-name">X5</span>, <span class="org-variable-name">X6</span>, <span class="org-variable-name">P</span>) <span class="org-keyword">;</span>    <span class="org-comment">% 2nd line</span>
+    equal(<span class="org-variable-name">X7</span>, <span class="org-variable-name">X8</span>, <span class="org-variable-name">X9</span>, <span class="org-variable-name">P</span>) <span class="org-keyword">;</span>    <span class="org-comment">% 3rd line</span>
+    equal(<span class="org-variable-name">X1</span>, <span class="org-variable-name">X4</span>, <span class="org-variable-name">X7</span>, <span class="org-variable-name">P</span>) <span class="org-keyword">;</span>    <span class="org-comment">% 1st col</span>
+    equal(<span class="org-variable-name">X2</span>, <span class="org-variable-name">X5</span>, <span class="org-variable-name">X8</span>, <span class="org-variable-name">P</span>) <span class="org-keyword">;</span>    <span class="org-comment">% 2nd col</span>
+    equal(<span class="org-variable-name">X3</span>, <span class="org-variable-name">X6</span>, <span class="org-variable-name">X9</span>, <span class="org-variable-name">P</span>) <span class="org-keyword">;</span>    <span class="org-comment">% 3rd col</span>
+    equal(<span class="org-variable-name">X1</span>, <span class="org-variable-name">X5</span>, <span class="org-variable-name">X9</span>, <span class="org-variable-name">P</span>) <span class="org-keyword">;</span>    <span class="org-comment">% 1st diag</span>
+    equal(<span class="org-variable-name">X3</span>, <span class="org-variable-name">X5</span>, <span class="org-variable-name">X7</span>, <span class="org-variable-name">P</span>).     <span class="org-comment">% 2nd diag</span>
+
+<span class="org-function-name">equal</span>(<span class="org-variable-name">X</span>, <span class="org-variable-name">X</span>, <span class="org-variable-name">X</span>, <span class="org-variable-name">X</span>).
+</pre>
+</div>
+<p>
+Now we have all the material to develop the most difficult predicate, <code>move/3</code> :
+</p>
+<div class="org-src-container">
+<pre class="src src-prolog"><span class="org-function-name">move</span>(<span class="org-keyword">[</span><span class="org-variable-name">X1</span>, play, <span class="org-variable-name">Board</span><span class="org-keyword">]</span>, <span class="org-keyword">[</span><span class="org-variable-name">X2</span>, win, <span class="org-variable-name">NextBoard</span><span class="org-keyword">]</span>) :-
+    nextPlayer(<span class="org-variable-name">X1</span>, <span class="org-variable-name">X2</span>),
+    move_aux(<span class="org-variable-name">X1</span>, <span class="org-variable-name">Board</span>, <span class="org-variable-name">NextBoard</span>),
+    winPos(<span class="org-variable-name">X1</span>, <span class="org-variable-name">NextBoard</span>), <span class="org-keyword">!</span>.
+
+<span class="org-function-name">move</span>(<span class="org-keyword">[</span><span class="org-variable-name">X1</span>, play, <span class="org-variable-name">Board</span><span class="org-keyword">]</span>, <span class="org-keyword">[</span><span class="org-variable-name">X2</span>, draw, <span class="org-variable-name">NextBoard</span><span class="org-keyword">]</span>) :-
+    nextPlayer(<span class="org-variable-name">X1</span>, <span class="org-variable-name">X2</span>),
+    move_aux(<span class="org-variable-name">X1</span>, <span class="org-variable-name">Board</span>, <span class="org-variable-name">NextBoard</span>),
+    drawPos(<span class="org-variable-name">X1</span>,<span class="org-variable-name">NextBoard</span>), <span class="org-keyword">!</span>.
+
+<span class="org-function-name">move</span>(<span class="org-keyword">[</span><span class="org-variable-name">X1</span>, play, <span class="org-variable-name">Board</span><span class="org-keyword">]</span>, <span class="org-keyword">[</span><span class="org-variable-name">X2</span>, play, <span class="org-variable-name">NextBoard</span><span class="org-keyword">]</span>) :-
+    nextPlayer(<span class="org-variable-name">X1</span>, <span class="org-variable-name">X2</span>),
+    move_aux(<span class="org-variable-name">X1</span>, <span class="org-variable-name">Board</span>, <span class="org-variable-name">NextBoard</span>).
+
+<span class="org-function-name">move_aux</span>(<span class="org-variable-name">P</span>, <span class="org-keyword">[</span>0<span class="org-keyword">|</span><span class="org-variable-name">Bs</span><span class="org-keyword">]</span>, <span class="org-keyword">[</span><span class="org-variable-name">P</span><span class="org-keyword">|</span><span class="org-variable-name">Bs</span><span class="org-keyword">]</span>).
+
+<span class="org-function-name">move_aux</span>(<span class="org-variable-name">P</span>, <span class="org-keyword">[</span><span class="org-variable-name">B</span><span class="org-keyword">|</span><span class="org-variable-name">Bs</span><span class="org-keyword">]</span>, <span class="org-keyword">[</span><span class="org-variable-name">B</span><span class="org-keyword">|</span><span class="org-variable-name">B2s</span><span class="org-keyword">]</span>) :-
+    move_aux(<span class="org-variable-name">P</span>, <span class="org-variable-name">Bs</span>, <span class="org-variable-name">B2s</span>).
+</pre>
+</div>
+<p>
+The three first rules correspond to the following cases :
+</p>
+<ol class="org-ol">
+<li>a move from a <code>Board</code> to a terminal winning state for player <code>X1</code>
+</li>
+<li>a move from a <code>Board</code> to a terminal draw state
+</li>
+<li>a move from a <code>Board</code> to a non-terminal state
+</li>
+</ol>
+<p>
+The <code>move_aux</code> rules only states <code>NextBoard</code> is <code>Board</code> with an empty case replaced by <code>Player</code> mark.
+</p>
+<p>
+We are now done! The <code>minimax</code> engine can now work fine with all these rules defined.
+</p>
+<p>
+You can download the <a href="./minimax.pl"><code>minimax.pl</code></a>, <a href="./tictactoe.pl"><code>tictactoe.pl</code></a> and <a href="./tictactoe-game.pl"><code>tictactoe-game.pl</code></a> files to play with the computer.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Exercises</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Let's now extend our game in different directions.
+</p>
+</div>
+<div id="outline-container-sec-4-1" class="outline-3 exo">
+<h3 id="sec-4-1">Exercise 1</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+By extending the <code>minimax</code> engine we developed, implement the <b>alpha-beta</b> pruning technique presented in the <a href="http://www.emse.fr/~picard/cours/ai/chapter05.pdf">course</a>. Compare it with the classical <code>minimax</code>.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3 exo">
+<h3 id="sec-4-2">Exercise 2</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+By extending the <code>minimax</code> engine we developed (or the <code>alphabeta</code> algorithm you developed), implement the <b>cutting off</b> technique presented in the <a href="http://www.emse.fr/~picard/cours/ai/chapter05.pdf">course</a>. Compare it with the classical <code>minimax</code> and <code>alphabeta</code>.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3 exo">
+<h3 id="sec-4-3">Exercise 2</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+By taking inspiration from the tic-tac-toe game we developed, implement another two-player game of your choice.
+</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p>the <code>bagof</code> rule is standard in SWIProlog: <a href="http://www.swi-prolog.org/pldoc/man?predicate=bagof/3">http://www.swi-prolog.org/pldoc/man?predicate=bagof/3</a></p></div>
+<div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p>Inspired by <a href="http://www.montefiore.ulg.ac.be/~lens/prolog/tutorials/tictactoe.pl">http://www.montefiore.ulg.ac.be/~lens/prolog/tutorials/tictactoe.pl</a></p></div>
+</div>
+</div></div><hr />
+<a class="liensPage" href="mailto:picard@emse.fr">Gauthier Picard</a><!--, October 2014--></div>
+<div id="footer" class="section">
+<p class="update"><?php setlocale (LC_TIME, 'fr_FR.utf8','fra');  echo "Last Update: ".date("j F Y", getlastmod())." at ".date("H:i:s", getlastmod());?></p>
+</div>
+</body>
+</html>

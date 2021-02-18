@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-03-09 Mon 13:53 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Artificial Intelligence - Chapter 3 with Java</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Gauthier Picard" />
+<link rel="stylesheet" type="text/css" href="https://www.emse.fr/~picard/style/style.css" /><link rel="stylesheet" type="text/css" href="https://www.emse.fr/~picard/style/cours.css" />
+<link rel="stylesheet" type="text/css" href="../styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="../styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="../styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="./styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/hideshow.js"></script>
+<script type="text/javascript" src="../styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Artificial Intelligence - Chapter 3 with Java
+<br>
+<span class="subtitle">MINES Saint-Etienne</span>
+</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#h:0A192DB7-856F-49BC-B9B6-9A56879BD6B2">Introduction</a></li>
+<li><a href="#h:8A3849BE-7B69-4B24-9357-3CC79DAA9C6D">Modeling problems</a></li>
+<li><a href="#h:84F6DF83-0372-472E-9D38-90A9A17CE75E">Solving problems</a></li>
+<li><a href="#h:E1EF2575-D6FC-4364-B4D9-8239219BE2DB">Exercises: coding solvers</a></li>
+<li><a href="#h:4AAA5AD3-DACC-448C-9141-516E092FD730">Exercises: modeling problems</a></li>
+<li><a href="#h:B8CA543D-30BE-486B-A7BC-FEE2D7944DE9">Exercises: extras</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-h:0A192DB7-856F-49BC-B9B6-9A56879BD6B2" class="outline-2">
+<h2 id="h:0A192DB7-856F-49BC-B9B6-9A56879BD6B2"><a id="org86c0089"></a>Introduction</h2>
+<div class="outline-text-2" id="text-h:0A192DB7-856F-49BC-B9B6-9A56879BD6B2">
+<p>
+The goal of this tutorial is to understand how to (i) model problems to solve and (ii) implement the search algorithms as described in <a href="http://aima.cs.berkeley.edu">AIMA</a>. We take inspiration here from the algorithm provided by <a href="https://github.com/aima-java/aima-java">AIMA-Java Project</a>.
+The slides containing the pseudocode are available <a href="http://www.emse.fr/~picard/cours/ai/chapter03.pdf">here</a>. 
+</p>
+</div>
+
+<div id="outline-h:8CDB3B20-F009-4499-AB0D-B65420DFC498" class="outline-3 alert">
+<h3 id="h:8CDB3B20-F009-4499-AB0D-B65420DFC498"><a id="org0a27ea2"></a>Assignment</h3>
+<div class="outline-text-3" id="text-h:8CDB3B20-F009-4499-AB0D-B65420DFC498">
+<p>
+    The lab must be completed on <b>March 25th, 2020</b>. Archive your source code and files and send them to <a class="liensPage" href="#" onmouseover="javascript:printMailTo(this, 'gzzazzuzztzzhzzizzezzrzz.zzpzzizzczzazzrzzdzz#zzezzmzzszzezz.zzfzzrzz', '[TBIA] Chapter 3 &LT;your name&GT;',3)">Gauthier Picard</a> 
+with subject <b>[TBIA] Chapter 3 &lt;your name&gt;</b>. The work will be marked.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-h:8A3849BE-7B69-4B24-9357-3CC79DAA9C6D" class="outline-2">
+<h2 id="h:8A3849BE-7B69-4B24-9357-3CC79DAA9C6D"><a id="org6b20501"></a>Modeling problems</h2>
+<div class="outline-text-2" id="text-h:8A3849BE-7B69-4B24-9357-3CC79DAA9C6D">
+<p>
+As to focus one the problem modeling and the implementation of search algorithm, we provide here some reusable code.
+</p>
+</div>
+
+<div id="outline-h:DDFD5CE0-219B-4FF0-AA5B-44B6EE13C60A" class="outline-3">
+<h3 id="h:DDFD5CE0-219B-4FF0-AA5B-44B6EE13C60A"><a id="orgf422f45"></a>The <code>Problem</code> interface</h3>
+<div class="outline-text-3" id="text-h:DDFD5CE0-219B-4FF0-AA5B-44B6EE13C60A">
+<p>
+The first important structure we use is the <code>Problem</code> interface. To define a particular problem to solve, you must implement this interface.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.search.<span class="org-constant">core</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">Collection</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">interface</span> <span class="org-type">Problem</span> {
+
+    <span class="org-keyword">public</span> <span class="org-type">Object</span> <span class="org-function-name">getInitialState</span>();
+    <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">isGoal</span>(<span class="org-type">Object</span> <span class="org-variable-name">state</span>);
+    <span class="org-keyword">public</span> <span class="org-type">Collection</span>&lt;<span class="org-type">Object</span>&gt; <span class="org-function-name">getActions</span>(<span class="org-type">Object</span> <span class="org-variable-name">state</span>);
+    <span class="org-keyword">public</span> <span class="org-type">Object</span> <span class="org-function-name">getNextState</span>(<span class="org-type">Object</span> <span class="org-variable-name">state</span>,<span class="org-type">Object</span> <span class="org-variable-name">action</span>);
+    <span class="org-keyword">public</span> <span class="org-type">double</span> <span class="org-function-name">getStepCost</span>(<span class="org-type">Object</span> <span class="org-variable-name">start</span>, <span class="org-type">Object</span> <span class="org-variable-name">action</span>, <span class="org-type">Object</span> <span class="org-variable-name">dest</span>);
+
+}
+</pre>
+</div>
+
+<p>
+It must provide, by implementing different methods, the different components of a problem definition :
+</p>
+<ul class="org-ul">
+<li><code>getInitialState</code>: its initial state, that can be any <code>Object</code> instance (i.e. anything),</li>
+<li><code>isGoal</code>: a predicate to check ifthe goal is achieved,</li>
+<li><code>getActions</code>: a function returning the list of actions (instances of <code>Object</code>) for a given state (instance of <code>Object</code>),</li>
+<li><code>getNextState</code>: a function returning the state following another given state when performing a given action,</li>
+<li><code>getStepCost</code>: a function returning the cost of transitting from a state to another performing a given action.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-h:098AB463-F5FD-439B-AA9E-1267EB390404" class="outline-3">
+<h3 id="h:098AB463-F5FD-439B-AA9E-1267EB390404"><a id="orgc8d85bd"></a>The <code>Node</code> class</h3>
+<div class="outline-text-3" id="text-h:098AB463-F5FD-439B-AA9E-1267EB390404">
+<p>
+The <code>Node</code> class is used by search algorithms to store the search state. A node points to a particular state of the search space. This state can be any <code>Object</code> subclass instance (<code>String</code>, <code>Integer</code>, etc.), as defined in the particular problem to solve.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.search.<span class="org-constant">core</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">ArrayList</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">List</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">Node</span> {
+
+    <span class="org-keyword">private</span> <span class="org-type">Object</span> <span class="org-variable-name">state</span>;
+    <span class="org-keyword">private</span> <span class="org-type">Node</span> <span class="org-variable-name">parent</span>;
+    <span class="org-keyword">private</span> <span class="org-type">Object</span> <span class="org-variable-name">action</span>;
+    <span class="org-keyword">private</span> <span class="org-type">double</span> <span class="org-variable-name">pathCost</span>;
+
+    <span class="org-keyword">public</span> <span class="org-function-name">Node</span>(<span class="org-type">Object</span> <span class="org-variable-name">state</span>) {
+        <span class="org-keyword">this</span>.state = state;
+        <span class="org-keyword">this</span>.pathCost = 0.0;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-function-name">Node</span>(<span class="org-type">Object</span> <span class="org-variable-name">state</span>, <span class="org-type">Node</span> <span class="org-variable-name">parent</span>, <span class="org-type">Object</span> <span class="org-variable-name">action</span>, <span class="org-type">double</span> <span class="org-variable-name">stepCost</span>) {
+        <span class="org-keyword">this</span>(state);
+        <span class="org-keyword">this</span>.parent = parent;
+        <span class="org-keyword">this</span>.action = action;
+        <span class="org-keyword">this</span>.pathCost = parent.pathCost + stepCost;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">Object</span> <span class="org-function-name">getState</span>() {
+        <span class="org-keyword">return</span> state;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">Node</span> <span class="org-function-name">getParent</span>() {
+        <span class="org-keyword">return</span> parent;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">Object</span> <span class="org-function-name">getAction</span>() {
+        <span class="org-keyword">return</span> action;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">double</span> <span class="org-function-name">getPathCost</span>() {
+        <span class="org-keyword">return</span> pathCost;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">isRootNode</span>() {
+        <span class="org-keyword">return</span> parent == <span class="org-constant">null</span>;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">List</span>&lt;<span class="org-type">Node</span>&gt; <span class="org-function-name">getPathFromRoot</span>() {
+        <span class="org-type">List</span>&lt;<span class="org-type">Node</span>&gt; <span class="org-variable-name">path</span> = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">Node</span>&gt;();
+        <span class="org-type">Node</span> <span class="org-variable-name">current</span> = <span class="org-keyword">this</span>;
+        <span class="org-keyword">while</span> (<span class="org-negation-char">!</span>current.isRootNode()) {
+            path.add(0, current);
+            current = current.getParent();
+        }
+        <span class="org-comment-delimiter">// </span><span class="org-comment">ensure the root node is added</span>
+        path.add(0, current);
+        <span class="org-keyword">return</span> path;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">String</span> <span class="org-function-name">toString</span>() {
+        <span class="org-keyword">return</span> <span class="org-string">"[parent="</span> + parent + <span class="org-string">", action="</span> + action + <span class="org-string">", state="</span>
+                + getState() + <span class="org-string">", pathCost="</span> + pathCost + <span class="org-string">"]"</span>;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">String</span> <span class="org-function-name">pathToString</span>() {
+        <span class="org-type">String</span> <span class="org-variable-name">s</span> = <span class="org-string">""</span>;
+        <span class="org-type">List</span>&lt;<span class="org-type">Node</span>&gt; <span class="org-variable-name">nodes</span> = getPathFromRoot();
+        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; nodes.<span class="org-type">size</span>(); i++) {
+            System.out.println(<span class="org-string">"Action : "</span> + nodes.get(i).getAction());
+            System.out.println(<span class="org-string">"State  : "</span> + nodes.get(i).getState());
+        }
+        <span class="org-keyword">return</span> s;
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-h:BDD764FE-A8E9-4BE7-81DB-602736334802" class="outline-3">
+<h3 id="h:BDD764FE-A8E9-4BE7-81DB-602736334802"><a id="orgffc0269"></a>Example of problem modeling</h3>
+<div class="outline-text-3" id="text-h:BDD764FE-A8E9-4BE7-81DB-602736334802">
+<p>
+As to make things concrete, here is an example of problem modeling.
+We want to model the following problem: find a path from <code>a</code> to <code>h</code>.
+</p>
+
+
+<div id="orgb818e5a" class="figure">
+<p><img src="./images/graph.png" alt="simple" width="400px" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Simple graph</p>
+</div>
+
+<p>
+We first define our <code>State</code> model: simple <code>String</code>. Each state is a simple <code>String</code>. We especially take care of redefining the <code>equals</code> methods that will be used later, e.g. to check if the goal is reached.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.search.<span class="org-constant">simple</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">SimpleState</span> {
+
+    <span class="org-keyword">public</span> <span class="org-keyword">final</span> <span class="org-keyword">static</span> <span class="org-type">String</span> <span class="org-variable-name">A</span> = <span class="org-string">"A"</span>;
+    <span class="org-keyword">public</span> <span class="org-keyword">final</span> <span class="org-keyword">static</span> <span class="org-type">String</span> <span class="org-variable-name">B</span> = <span class="org-string">"B"</span>;
+    <span class="org-keyword">public</span> <span class="org-keyword">final</span> <span class="org-keyword">static</span> <span class="org-type">String</span> <span class="org-variable-name">C</span> = <span class="org-string">"C"</span>;
+    <span class="org-keyword">public</span> <span class="org-keyword">final</span> <span class="org-keyword">static</span> <span class="org-type">String</span> <span class="org-variable-name">D</span> = <span class="org-string">"D"</span>;
+    <span class="org-keyword">public</span> <span class="org-keyword">final</span> <span class="org-keyword">static</span> <span class="org-type">String</span> <span class="org-variable-name">E</span> = <span class="org-string">"E"</span>;
+    <span class="org-keyword">public</span> <span class="org-keyword">final</span> <span class="org-keyword">static</span> <span class="org-type">String</span> <span class="org-variable-name">F</span> = <span class="org-string">"F"</span>;
+    <span class="org-keyword">public</span> <span class="org-keyword">final</span> <span class="org-keyword">static</span> <span class="org-type">String</span> <span class="org-variable-name">G</span> = <span class="org-string">"G"</span>;
+    <span class="org-keyword">public</span> <span class="org-keyword">final</span> <span class="org-keyword">static</span> <span class="org-type">String</span> <span class="org-variable-name">H</span> = <span class="org-string">"H"</span>;
+
+    <span class="org-keyword">public</span> <span class="org-type">String</span> <span class="org-variable-name">value</span>;
+
+    <span class="org-keyword">public</span> <span class="org-function-name">SimpleState</span>(<span class="org-type">String</span> <span class="org-variable-name">value</span>) {
+        <span class="org-keyword">this</span>.value = value;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">equals</span>(<span class="org-type">Object</span> <span class="org-variable-name">o</span>) {
+        <span class="org-keyword">if</span> (o <span class="org-keyword">instanceof</span> SimpleState) {
+            <span class="org-keyword">return</span> ((<span class="org-type">SimpleState</span>) o).value.equals(<span class="org-keyword">this</span>.value);
+        }
+        <span class="org-keyword">return</span> <span class="org-constant">false</span>;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">String</span> <span class="org-function-name">toString</span>() {
+        <span class="org-keyword">return</span> value;
+    }
+
+}
+</pre>
+</div>
+
+<p>
+Then, we can simply implement the <code>Problem</code> interface while keeping the graph in mind. Look at the implementation of each method, especially how to define actions and next states. Here we fix a simple unit cost for each move.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.search.<span class="org-constant">simple</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">fr</span>.<span class="org-constant">emse</span>.<span class="org-constant">ai</span>.<span class="org-constant">search</span>.<span class="org-constant">core</span>.<span class="org-type">Problem</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">ArrayList</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">Collection</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">SimpleOrientedGraphProblem</span> <span class="org-keyword">implements</span> <span class="org-type">Problem</span> {
+
+    <span class="org-type">SimpleState</span> <span class="org-variable-name">initialState</span> = <span class="org-keyword">new</span> <span class="org-type">SimpleState</span>(<span class="org-constant">SimpleState</span>.A);
+    <span class="org-type">SimpleState</span> <span class="org-variable-name">finalState</span> = <span class="org-keyword">new</span> <span class="org-type">SimpleState</span>(<span class="org-constant">SimpleState</span>.H);
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">Object</span> <span class="org-function-name">getInitialState</span>() {
+        <span class="org-keyword">return</span> initialState;
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">isGoal</span>(<span class="org-type">Object</span> <span class="org-variable-name">state</span>) {
+        <span class="org-keyword">return</span> state.equals(finalState);
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">Collection</span>&lt;<span class="org-type">Object</span>&gt; <span class="org-function-name">getActions</span>(<span class="org-type">Object</span> <span class="org-variable-name">state</span>) {
+        <span class="org-type">ArrayList</span>&lt;<span class="org-type">Object</span>&gt; <span class="org-variable-name">actions</span> = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">Object</span>&gt;();
+        <span class="org-type">String</span> <span class="org-variable-name">s</span> = ((<span class="org-type">SimpleState</span>) state).value;
+        <span class="org-keyword">if</span> (s.equals(<span class="org-constant">SimpleState</span>.A)) {
+            actions.add(<span class="org-string">"go to B"</span>);
+            actions.add(<span class="org-string">"go to C"</span>);
+        } <span class="org-keyword">else</span> <span class="org-keyword">if</span> (s.equals(<span class="org-constant">SimpleState</span>.B)) {
+            actions.add(<span class="org-string">"go to D"</span>);
+            actions.add(<span class="org-string">"go to E"</span>);
+        } <span class="org-keyword">else</span> <span class="org-keyword">if</span> (s.equals(<span class="org-constant">SimpleState</span>.C)) {
+            actions.add(<span class="org-string">"go to D"</span>);
+        } <span class="org-keyword">else</span> <span class="org-keyword">if</span> (s.equals(<span class="org-constant">SimpleState</span>.D)) {
+            actions.add(<span class="org-string">"go to G"</span>);
+        } <span class="org-keyword">else</span> <span class="org-keyword">if</span> (s.equals(<span class="org-constant">SimpleState</span>.E)) {
+            actions.add(<span class="org-string">"go to F"</span>);
+        } <span class="org-keyword">else</span> <span class="org-keyword">if</span> (s.equals(<span class="org-constant">SimpleState</span>.F)) {
+            actions.add(<span class="org-string">"go to H"</span>);
+        } <span class="org-keyword">else</span> <span class="org-keyword">if</span> (s.equals(<span class="org-constant">SimpleState</span>.G)) {
+            actions.add(<span class="org-string">"go to H"</span>);
+        } <span class="org-keyword">else</span> <span class="org-keyword">if</span> (s.equals(<span class="org-constant">SimpleState</span>.H)) {
+
+        }
+        <span class="org-keyword">return</span> actions;
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">Object</span> <span class="org-function-name">getNextState</span>(<span class="org-type">Object</span> <span class="org-variable-name">state</span>, <span class="org-type">Object</span> <span class="org-variable-name">action</span>) {
+        <span class="org-keyword">if</span> (action.equals(<span class="org-string">"go to A"</span>)) <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">SimpleState</span>(<span class="org-constant">SimpleState</span>.A);
+        <span class="org-keyword">if</span> (action.equals(<span class="org-string">"go to B"</span>)) <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">SimpleState</span>(<span class="org-constant">SimpleState</span>.B);
+        <span class="org-keyword">if</span> (action.equals(<span class="org-string">"go to C"</span>)) <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">SimpleState</span>(<span class="org-constant">SimpleState</span>.C);
+        <span class="org-keyword">if</span> (action.equals(<span class="org-string">"go to D"</span>)) <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">SimpleState</span>(<span class="org-constant">SimpleState</span>.D);
+        <span class="org-keyword">if</span> (action.equals(<span class="org-string">"go to E"</span>)) <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">SimpleState</span>(<span class="org-constant">SimpleState</span>.E);
+        <span class="org-keyword">if</span> (action.equals(<span class="org-string">"go to F"</span>)) <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">SimpleState</span>(<span class="org-constant">SimpleState</span>.F);
+        <span class="org-keyword">if</span> (action.equals(<span class="org-string">"go to G"</span>)) <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">SimpleState</span>(<span class="org-constant">SimpleState</span>.G);
+        <span class="org-keyword">if</span> (action.equals(<span class="org-string">"go to H"</span>)) <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">SimpleState</span>(<span class="org-constant">SimpleState</span>.H);
+        <span class="org-keyword">return</span> <span class="org-constant">null</span>;
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">double</span> <span class="org-function-name">getStepCost</span>(<span class="org-type">Object</span> <span class="org-variable-name">start</span>, <span class="org-type">Object</span> <span class="org-variable-name">action</span>, <span class="org-type">Object</span> <span class="org-variable-name">dest</span>) {
+        <span class="org-keyword">return</span> 1;
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-h:84F6DF83-0372-472E-9D38-90A9A17CE75E" class="outline-2">
+<h2 id="h:84F6DF83-0372-472E-9D38-90A9A17CE75E"><a id="org443b891"></a>Solving problems</h2>
+<div class="outline-text-2" id="text-h:84F6DF83-0372-472E-9D38-90A9A17CE75E">
+<p>
+Now we have seen how to model problems, we need to define a class to solve these problems. As we have seen in class, there are minaly two search algorithm families: Tree search and Graph search.
+</p>
+</div>
+
+<div id="outline-h:A05AC2F3-44D5-4D03-A5B0-1B830898A743" class="outline-3">
+<h3 id="h:A05AC2F3-44D5-4D03-A5B0-1B830898A743"><a id="org41719bb"></a>The <code>AbstractTreeSearch</code> abstract class</h3>
+<div class="outline-text-3" id="text-h:A05AC2F3-44D5-4D03-A5B0-1B830898A743">
+<p>
+We provide here the code for a Tree search algorithm. It is abstract, since as we have seen in class, several solvers can be implemented using these skeleton: breadth-frist, depth-first, etc. To do so one must implement the <code>initFrontier</code> and <code>chooseLeafNode</code> methods. They will differ for solver to solver. The core of the solving algorithm is coded in the <code>solve</code> method which returns a <code>Node</code> (containing the path to the destination) given a specific <code>Problem</code> instance (e.g. an instance of <code>SimpleOrientedGraphProblem</code>). This method is a direct translation of the pseudo-code found in AIMA chapter 3.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.search.<span class="org-constant">core</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">ArrayList</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">Collection</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">abstract</span> <span class="org-keyword">class</span> <span class="org-type">AbstractTreeSearch</span> <span class="org-keyword">implements</span> <span class="org-type">Search</span> {
+
+    <span class="org-type">Collection</span>&lt;<span class="org-type">Node</span>&gt; <span class="org-variable-name">frontier</span>;
+
+    <span class="org-keyword">public</span> <span class="org-type">Node</span> <span class="org-function-name">solve</span>(<span class="org-type">Problem</span> <span class="org-variable-name">problem</span>) {
+        System.out.println(<span class="org-string">"Solving..."</span>);
+        frontier = initFrontier();
+        frontier.addAll(expand(<span class="org-keyword">new</span> <span class="org-type">Node</span>(problem.getInitialState()), problem));
+        System.out.println(<span class="org-string">"Starting frontier is "</span> + frontier);
+        <span class="org-type">boolean</span> <span class="org-variable-name">done</span> = <span class="org-constant">false</span>;
+        <span class="org-type">Node</span> <span class="org-variable-name">solution</span> = <span class="org-constant">null</span>;
+        <span class="org-keyword">while</span> (<span class="org-negation-char">!</span>done) {
+            <span class="org-keyword">if</span> (frontier.isEmpty()) {
+                System.out.println(<span class="org-string">"No more nodes in frontier =&gt; FAILURE"</span>);
+                done = <span class="org-constant">true</span>;
+            } <span class="org-keyword">else</span> {
+                <span class="org-type">Node</span> <span class="org-variable-name">node</span> = chooseLeafNode(frontier, problem);
+                System.out.println(<span class="org-string">"Inspecting node "</span> + node);
+                <span class="org-keyword">if</span> (problem.isGoal(node.getState())) {
+                    System.out.println(<span class="org-string">"Goal node reached =&gt; SUCCESS"</span>);
+                    solution = node;
+                    done = <span class="org-constant">true</span>;
+                } <span class="org-keyword">else</span> {
+                    frontier.addAll(expand(node, problem));
+                    System.out.printf(<span class="org-string">"Expanding node, frontier is "</span> + frontier);
+                }
+            }
+        }
+        <span class="org-keyword">return</span> solution;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">Collection</span>&lt;<span class="org-type">Node</span>&gt; <span class="org-function-name">expand</span>(<span class="org-type">Node</span> <span class="org-variable-name">node</span>, <span class="org-type">Problem</span> <span class="org-variable-name">problem</span>) {
+        <span class="org-type">Collection</span>&lt;<span class="org-type">Node</span>&gt; <span class="org-variable-name">nodes</span> = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">Node</span>&gt;();
+        <span class="org-type">Collection</span>&lt;<span class="org-type">Object</span>&gt; <span class="org-variable-name">actions</span> = problem.getActions(node.getState());
+        <span class="org-keyword">for</span> (<span class="org-type">Object</span> <span class="org-variable-name">action</span> : actions) {
+            <span class="org-type">Object</span> <span class="org-variable-name">next</span> = problem.getNextState(node.getState(), action);
+            nodes.add(<span class="org-keyword">new</span> <span class="org-type">Node</span>(next, node, action, 
+                problem.getStepCost(node.getState(), action, next)));
+        }
+        <span class="org-keyword">return</span> nodes;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-keyword">abstract</span> <span class="org-type">Collection</span>&lt;<span class="org-type">Node</span>&gt; <span class="org-function-name">initFrontier</span>();
+
+    <span class="org-keyword">public</span> <span class="org-keyword">abstract</span> <span class="org-type">Node</span> <span class="org-function-name">chooseLeafNode</span>(<span class="org-type">Collection</span>&lt;<span class="org-type">Node</span>&gt; <span class="org-variable-name">frontier</span>, <span class="org-type">Problem</span> <span class="org-variable-name">problem</span>);
+}
+</pre>
+</div>
+
+<p>
+The next step is thus to implement a specific solver. Let's implement a depth-first solver. To do so, we have to implement the two abstract methods of our <code>AbstractTreeSearch</code>. As said in class, the data structure on which depth-first relies is a <b>stack</b>, and the next node to be chosen is the top of the stack. So, defining a depth-first is as simple as that:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.search.<span class="org-constant">solver</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">fr</span>.<span class="org-constant">emse</span>.<span class="org-constant">ai</span>.<span class="org-constant">search</span>.<span class="org-constant">core</span>.<span class="org-type">AbstractTreeSearch</span>;
+<span class="org-keyword">import</span> <span class="org-constant">fr</span>.<span class="org-constant">emse</span>.<span class="org-constant">ai</span>.<span class="org-constant">search</span>.<span class="org-constant">core</span>.<span class="org-type">Node</span>;
+<span class="org-keyword">import</span> <span class="org-constant">fr</span>.<span class="org-constant">emse</span>.<span class="org-constant">ai</span>.<span class="org-constant">search</span>.<span class="org-constant">core</span>.<span class="org-type">Problem</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">Collection</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">Stack</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">DepthFirstTreeSearch</span> <span class="org-keyword">extends</span> <span class="org-type">AbstractTreeSearch</span> {
+
+    <span class="org-keyword">public</span> <span class="org-type">Collection</span>&lt;<span class="org-type">Node</span>&gt; <span class="org-function-name">initFrontier</span>() {
+        <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">Stack</span>&lt;<span class="org-type">Node</span>&gt;();
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">Node</span> <span class="org-function-name">chooseLeafNode</span>(<span class="org-type">Collection</span>&lt;<span class="org-type">Node</span>&gt; <span class="org-variable-name">frontier</span>, <span class="org-type">Problem</span> <span class="org-variable-name">problem</span>) {
+        <span class="org-keyword">return</span> ((<span class="org-type">Stack</span>&lt;<span class="org-type">Node</span>&gt;) frontier).pop();
+    }
+}
+</pre>
+</div>
+
+<p>
+Let's now put all those things together, by solving our simplem problem in a main program:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.search.<span class="org-constant">simple</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">fr</span>.<span class="org-constant">emse</span>.<span class="org-constant">ai</span>.<span class="org-constant">search</span>.<span class="org-constant">solver</span>.<span class="org-type">DepthFirstTreeSearch</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">SimpleTest</span> {
+
+    <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">main</span>(<span class="org-type">String</span>[] <span class="org-variable-name">args</span>) {
+        <span class="org-type">SimpleOrientedGraphProblem</span> <span class="org-variable-name">p1</span> = <span class="org-keyword">new</span> <span class="org-type">SimpleOrientedGraphProblem</span>();
+        System.out.println(<span class="org-string">"Solution to problem using depth first : "</span>);
+        System.out.println(<span class="org-keyword">new</span> <span class="org-type">DepthFirstTreeSearch</span>().solve(p1).pathToString());
+    }
+}
+</pre>
+</div>
+
+<p>
+We are now ready to work!
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-h:E1EF2575-D6FC-4364-B4D9-8239219BE2DB" class="outline-2">
+<h2 id="h:E1EF2575-D6FC-4364-B4D9-8239219BE2DB"><a id="orgedc8272"></a>Exercises: coding solvers</h2>
+<div class="outline-text-2" id="text-h:E1EF2575-D6FC-4364-B4D9-8239219BE2DB">
+</div>
+
+<div id="outline-h:4C5890C7-C20E-458C-B857-5B5FEF62DA14" class="outline-3 exo">
+<h3 id="h:4C5890C7-C20E-458C-B857-5B5FEF62DA14"><a id="org2a2e791"></a>Exercise 1</h3>
+<div class="outline-text-3" id="text-h:4C5890C7-C20E-458C-B857-5B5FEF62DA14">
+<p>
+Download the java source code <a href="./chapter3-src.zip">here</a>. Import the classes and interfaces in your development environment.
+Run the simple test. What happens?
+</p>
+</div>
+</div>
+
+<div id="outline-h:389EC232-758D-4151-A7D1-37C314CD4B39" class="outline-3 exo">
+<h3 id="h:389EC232-758D-4151-A7D1-37C314CD4B39"><a id="org4db2539"></a>Exercise 2</h3>
+<div class="outline-text-3" id="text-h:389EC232-758D-4151-A7D1-37C314CD4B39">
+<p>
+By taking inspiration from <code>DepthFirstTreeSearch</code>, code a breadth-first search algorithm. Run it on the simple problem. What happens?
+</p>
+</div>
+</div>
+
+<div id="outline-h:5147EAC8-D532-4938-9E7B-25A39802BE8F" class="outline-3 exo">
+<h3 id="h:5147EAC8-D532-4938-9E7B-25A39802BE8F"><a id="orgfb6f0c4"></a>Exercise 3</h3>
+<div class="outline-text-3" id="text-h:5147EAC8-D532-4938-9E7B-25A39802BE8F">
+<p>
+Now let's consider the graph is not directed. Code the new problem. Run your two solvers. What happens?
+</p>
+</div>
+</div>
+
+<div id="outline-h:54241474-7C86-410E-9DE2-9E155561A19A" class="outline-3 exo">
+<h3 id="h:54241474-7C86-410E-9DE2-9E155561A19A"><a id="org454116b"></a>Exercise 4</h3>
+<div class="outline-text-3" id="text-h:54241474-7C86-410E-9DE2-9E155561A19A">
+<p>
+Obviously our algorithms are looping indefinitely. AIMA book is our bible: the solution is to implement a <b>graph search</b>.
+By taking inspiration from <code>AbstractTreeSearch</code>, code the  <code>AbstractGraphSearch</code> abstract class and then a depth-first and a breadth-first graph search algorithms. 
+Run your new solvers on the simple problem. What happens?
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-h:4AAA5AD3-DACC-448C-9141-516E092FD730" class="outline-2">
+<h2 id="h:4AAA5AD3-DACC-448C-9141-516E092FD730"><a id="orga8735b1"></a>Exercises: modeling problems</h2>
+<div class="outline-text-2" id="text-h:4AAA5AD3-DACC-448C-9141-516E092FD730">
+</div>
+
+<div id="outline-h:CF853A7A-C4B1-4F81-8EB1-7500628DAEA7" class="outline-3 exo">
+<h3 id="h:CF853A7A-C4B1-4F81-8EB1-7500628DAEA7"><a id="orgc5dd48f"></a>Exercise 5</h3>
+<div class="outline-text-3" id="text-h:CF853A7A-C4B1-4F81-8EB1-7500628DAEA7">
+<p>
+Model and compare your solvers on the following problem:
+</p>
+
+<p>
+<i>The farmer wants to get his goat, wolf and cabbage to the other side of the river. His boat isn't very big and it can only carry him and either his goat, his wolf or his cabbage. Now&#x2026;..if he leaves the goat alone with the cabbage, the goat will gobble up the cabbage. If he leaves the wolf alone with the goat, the wolf will gobble up the goat. When the farmer is present, the goat and cabbage are safe from being gobbled up by their predators.</i>
+</p>
+
+<p>
+<i>How does the farmer manage to get everything safely to the other side of the river?</i>
+</p>
+</div>
+</div>
+
+<div id="outline-h:BE22B3B5-57B7-40C3-9A76-2827F66A3BEA" class="outline-3 exo">
+<h3 id="h:BE22B3B5-57B7-40C3-9A76-2827F66A3BEA"><a id="orge5d5ccb"></a>Exercise 6</h3>
+<div class="outline-text-3" id="text-h:BE22B3B5-57B7-40C3-9A76-2827F66A3BEA">
+<p>
+Model and compare your solvers on the following problem:
+</p>
+
+<p>
+<i>On one bank of a river are three missionaries and three cannibals. There is one boat available that can hold up to two people and that they would like to use to cross the river. If the cannibals ever outnumber the missionaries on either of the river’s banks, the missionaries will get eaten.</i>
+</p>
+
+<p>
+<i>How can the boat be used to safely carry all the missionaries and cannibals across the river?</i>
+</p>
+</div>
+</div>
+
+<div id="outline-h:268D7FF8-B690-434D-A08F-90CC84B25805" class="outline-3 exo">
+<h3 id="h:268D7FF8-B690-434D-A08F-90CC84B25805"><a id="org950dbd6"></a>Exercise 7</h3>
+<div class="outline-text-3" id="text-h:268D7FF8-B690-434D-A08F-90CC84B25805">
+<p>
+Model and compare your solvers on the following problem:
+</p>
+
+<p>
+<i>You have 2 cans A and B, each containing a quantity of liquid (initial situation). You can do the following as many times as you wish, and in the order you want:</i>
+</p>
+
+<i>
+<ul class="org-ul">
+<li>empty a container to the river,</li>
+<li>transfer the liquid from a canister in the other to empty the first or second fill.</li>
+</ul>
+</i>
+
+<p>
+<i>How to move from an initial situation at a given final position?</i>
+</p>
+
+<p>
+For example, you can test your program on the following cases:
+</p>
+<ul class="org-ul">
+<li>Can A has a capacity of 15, and can B has a capacity of 5,</li>
+<li>initial situation: A contains 12 and B contains 3,</li>
+<li>final situation: A contains 0 and B contains 5.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-h:B8CA543D-30BE-486B-A7BC-FEE2D7944DE9" class="outline-2">
+<h2 id="h:B8CA543D-30BE-486B-A7BC-FEE2D7944DE9"><a id="org226417e"></a>Exercises: extras</h2>
+<div class="outline-text-2" id="text-h:B8CA543D-30BE-486B-A7BC-FEE2D7944DE9">
+<p>
+You're done with the previous exercises&#x2026; Let's try these ones!
+</p>
+</div>
+
+<div id="outline-h:8489C221-D3A0-4FEF-80EA-A50CB5BB613B" class="outline-3 exo">
+<h3 id="h:8489C221-D3A0-4FEF-80EA-A50CB5BB613B"><a id="org69841b9"></a>Exercise 8</h3>
+<div class="outline-text-3" id="text-h:8489C221-D3A0-4FEF-80EA-A50CB5BB613B">
+<p>
+Implement the A* algorithm, and the related data structure.
+Test it on a problem of your choice, by taking inspiration from our simple problem.
+</p>
+</div>
+</div>
+
+<div id="outline-h:877A677C-4E94-410F-83EB-22B80E6ACC46" class="outline-3 exo">
+<h3 id="h:877A677C-4E94-410F-83EB-22B80E6ACC46"><a id="org43839e0"></a>Exercise 9</h3>
+<div class="outline-text-3" id="text-h:877A677C-4E94-410F-83EB-22B80E6ACC46">
+<p>
+Use your A* solver to solve a Wumpus world problem.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Gauthier Picard</p>
+<p class="email">Email: <a href="mailto:picard@emse.fr">picard@emse.fr</a></p>
+<p class="date">Created: 2020-03-09 Mon 13:53</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

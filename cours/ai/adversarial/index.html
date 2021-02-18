@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-04-03 Wed 08:36 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Artificial Intelligence - Chapter 5 with Java</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Gauthier Picard" />
+<link rel="stylesheet" type="text/css" href="https://www.emse.fr/~picard/style/style.css" /><link rel="stylesheet" type="text/css" href="https://www.emse.fr/~picard/style/cours.css" />
+<link rel="stylesheet" type="text/css" href="../styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="../styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="../styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="./styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/hideshow.js"></script>
+<script type="text/javascript" src="../styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Artificial Intelligence - Chapter 5 with Java
+<br>
+<span class="subtitle">MINES Saint-Etienne</span>
+</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#h:42FD75AC-FB22-4EDF-9941-81257617A185">Introduction</a></li>
+<li><a href="#h:AEB89D97-30B0-49A6-8C7F-F9F430BE4C54">Simple Minimax implementation</a></li>
+<li><a href="#h:805238FA-404E-4EAA-B075-95482D280384">Modeling games</a></li>
+<li><a href="#h:3DED575E-B92F-409C-9DFD-DE6D39491B21">Decision making algorithms</a></li>
+<li><a href="#h:05316357-C057-4C0F-AAB2-8FF305A3729E">Playing against the computer</a></li>
+<li><a href="#h:A0429098-91CB-4A96-8E1E-3E4FEA1C9B50">Exercises</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-h:42FD75AC-FB22-4EDF-9941-81257617A185" class="outline-2">
+<h2 id="h:42FD75AC-FB22-4EDF-9941-81257617A185"><a id="org284b12b"></a>Introduction</h2>
+<div class="outline-text-2" id="text-h:42FD75AC-FB22-4EDF-9941-81257617A185">
+<p>
+The goal of this tutorial is to understand how to (i) model adversarial games to solve and (ii) implement the search algorithms as described in <a href="http://aima.cs.berkeley.edu">AIMA</a>. We take inspiration here from the algorithm provided by <a href="https://github.com/aima-java/aima-java">AIMA-Java Project</a>.
+The slides containing the pseudocode are available <a href="http://www.emse.fr/~picard/cours/ai/chapter05.pdf">here</a>. 
+</p>
+</div>
+
+<!--div id="outline-h:43FD793C-E36E-4813-B461-E3664F2B0806" class="outline-3 alert">
+<h3 id="h:43FD793C-E36E-4813-B461-E3664F2B0806"><a id="org6a181e1"></a>Assignment</h3>
+<div class="outline-text-3" id="text-h:43FD793C-E36E-4813-B461-E3664F2B0806">
+<p>
+    The lab must be completed on <b>April 10th, 2019</b>. Archive your source code and files and send them to <a class="liensPage" href="#" onmouseover="javascript:printMailTo(this, 'gzzazzuzztzzhzzizzezzrzz.zzpzzizzczzazzrzzdzz#zzezzmzzszzezz.zzfzzrzz', '[TBIA] Chapter 5 &LT;your name&GT;',3)">Gauthier Picard</a> 
+with subject <b>[TBIA] Chapter 5 &lt;your name&gt;</b>. The work will be marked.
+</p>
+</div>
+</div>
+</div-->
+
+
+<div id="outline-h:AEB89D97-30B0-49A6-8C7F-F9F430BE4C54" class="outline-2">
+<h2 id="h:AEB89D97-30B0-49A6-8C7F-F9F430BE4C54"><a id="orgebfe038"></a>Simple Minimax implementation</h2>
+<div class="outline-text-2" id="text-h:AEB89D97-30B0-49A6-8C7F-F9F430BE4C54">
+<p>
+As to check your understanding of the Minimax procedure, we will first implement a function that returns the minimax value of a tree. We use here a simple two-ply game tree :
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.<span class="org-constant">util</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">ArrayList</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">List</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">V</span>&gt; {
+
+    <span class="org-keyword">private</span> <span class="org-type">V</span> <span class="org-variable-name">value</span>;
+    <span class="org-keyword">private</span> <span class="org-type">boolean</span> <span class="org-variable-name">max</span>;
+    <span class="org-keyword">private</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">V</span>&gt;&gt; <span class="org-variable-name">children</span>;
+
+    <span class="org-keyword">public</span> <span class="org-function-name">SimpleTwoPlyGameTree</span>(<span class="org-type">V</span> <span class="org-variable-name">value</span>, <span class="org-type">boolean</span> <span class="org-variable-name">max</span>) {
+        <span class="org-keyword">this</span>.value = value;
+        <span class="org-keyword">this</span>.max = max;
+        children = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">V</span>&gt;&gt;();
+    }
+
+    <span class="org-keyword">public</span> <span class="org-function-name">SimpleTwoPlyGameTree</span>(<span class="org-type">V</span> <span class="org-variable-name">value</span>,
+                                <span class="org-type">boolean</span> <span class="org-variable-name">max</span>,
+                                <span class="org-type">List</span>&lt;<span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">V</span>&gt;&gt; <span class="org-variable-name">children</span>) {
+        <span class="org-keyword">this</span>(value, max);
+        <span class="org-keyword">for</span> (<span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">V</span>&gt; <span class="org-variable-name">child</span> : children)
+            <span class="org-keyword">this</span>.children.add(child);
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">isLeaf</span>() {
+        <span class="org-keyword">return</span> children.isEmpty();
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">isMax</span>() {
+        <span class="org-keyword">return</span> max;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">addChild</span>(<span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">V</span>&gt; <span class="org-variable-name">child</span>) {
+        <span class="org-keyword">this</span>.children.add(child);
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">V</span> <span class="org-function-name">getValue</span>() {
+        <span class="org-keyword">return</span> <span class="org-keyword">this</span>.value;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">setValue</span>(<span class="org-type">V</span> <span class="org-variable-name">value</span>) {
+        <span class="org-keyword">this</span>.value = value;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">V</span>&gt;&gt; <span class="org-function-name">getChildren</span>() {
+        <span class="org-keyword">return</span> children;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">setChildren</span>(<span class="org-type">ArrayList</span>&lt;<span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">V</span>&gt;&gt; <span class="org-variable-name">children</span>) {
+        <span class="org-keyword">this</span>.children = children;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">String</span> <span class="org-function-name">toString</span>() {
+        <span class="org-type">String</span> <span class="org-variable-name">s</span> = <span class="org-string">""</span>;
+        s += <span class="org-string">"value = "</span> + value + <span class="org-string">" | "</span>;
+        s += <span class="org-string">"child = "</span> + children;
+        <span class="org-keyword">return</span> s;
+    }
+}
+</pre>
+</div>
+
+<p>
+To instanciate such a tree, we can do the following:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-type">ArrayList</span>&lt;<span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;&gt; <span class="org-variable-name">sublist1</span> = 
+   <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;&gt;();
+sublist1.add(<span class="org-keyword">new</span> <span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;(3,<span class="org-constant">true</span>));
+sublist1.add(<span class="org-keyword">new</span> <span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;(12,<span class="org-constant">true</span>));
+sublist1.add(<span class="org-keyword">new</span> <span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;(8,<span class="org-constant">true</span>));
+<span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt; <span class="org-variable-name">subtree1</span> = 
+   <span class="org-keyword">new</span> <span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;(<span class="org-constant">Integer</span>.MIN_VALUE,<span class="org-constant">false</span>,sublist1);
+<span class="org-type">ArrayList</span>&lt;<span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;&gt; <span class="org-variable-name">sublist2</span> = 
+   <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;&gt;();
+sublist2.add(<span class="org-keyword">new</span> <span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;(2,<span class="org-constant">true</span>));
+sublist2.add(<span class="org-keyword">new</span> <span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;(4,<span class="org-constant">true</span>));
+sublist2.add(<span class="org-keyword">new</span> <span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;(6,<span class="org-constant">true</span>));
+<span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt; <span class="org-variable-name">subtree2</span> = 
+   <span class="org-keyword">new</span> <span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;(<span class="org-constant">Integer</span>.MIN_VALUE,<span class="org-constant">false</span>,sublist2);
+<span class="org-type">ArrayList</span>&lt;<span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;&gt; <span class="org-variable-name">sublist3</span> = 
+   <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;&gt;();
+sublist3.add(<span class="org-keyword">new</span> <span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;(14,<span class="org-constant">true</span>));
+sublist3.add(<span class="org-keyword">new</span> <span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;(5,<span class="org-constant">true</span>));
+sublist3.add(<span class="org-keyword">new</span> <span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;(2,<span class="org-constant">true</span>));
+<span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt; <span class="org-variable-name">subtree3</span> = 
+   <span class="org-keyword">new</span> <span class="org-type">SimpleTwoPlyGameTree</span>&lt;<span class="org-type">Integer</span>&gt;(<span class="org-constant">Integer</span>.MIN_VALUE,<span class="org-constant">false</span>,sublist3);
+tree1.addChild(subtree1);
+tree1.addChild(subtree2);
+tree1.addChild(subtree3);
+</pre>
+</div>
+
+<p>
+This tree corresponds to the one used as an example in AIMA chapter 5.
+</p>
+</div>
+
+<div id="outline-h:2553F7DE-FE19-4441-A929-B9695DD1D77B" class="outline-3 exo">
+<h3 id="h:2553F7DE-FE19-4441-A929-B9695DD1D77B"><a id="org6726ed3"></a>Exercise 1</h3>
+<div class="outline-text-3" id="text-h:2553F7DE-FE19-4441-A929-B9695DD1D77B">
+<p>
+Download the <code>SimpleTwoPlyGameTree</code> class <a href="./SimpleTwoPlyGameTree.java">here</a>. Implement the <code>minimax</code> function that returns the minimax value of a given instance of <code>SimpleTwoPlyGameTree&lt;Integer&gt;</code>. 
+</p>
+</div>
+</div>
+
+<div id="outline-h:09D27526-1E92-40D2-8D06-1BF23F4715CC" class="outline-3 exo">
+<h3 id="h:09D27526-1E92-40D2-8D06-1BF23F4715CC"><a id="orga39e7d3"></a>Exercise 2</h3>
+<div class="outline-text-3" id="text-h:09D27526-1E92-40D2-8D06-1BF23F4715CC">
+<p>
+Implement the <code>alphabeta</code> function that returns the minimax value of a given instance of <code>Tree&lt;Integer&gt;</code> using alphabeta pruning technique, by extending <code>minimax</code>. Compare the results with <code>minimax</code>. 
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-h:805238FA-404E-4EAA-B075-95482D280384" class="outline-2">
+<h2 id="h:805238FA-404E-4EAA-B075-95482D280384"><a id="org0203650"></a>Modeling games</h2>
+<div class="outline-text-2" id="text-h:805238FA-404E-4EAA-B075-95482D280384">
+<p>
+Let's now implement real games!
+</p>
+
+<p>
+As to focus one the game modeling and the implementation of search algorithms, we provide here some reusable code.
+</p>
+</div>
+
+<div id="outline-h:3D31DF62-5758-435F-9A5C-D264606DA836" class="outline-3">
+<h3 id="h:3D31DF62-5758-435F-9A5C-D264606DA836"><a id="org548ec62"></a>The <code>Game</code> interface</h3>
+<div class="outline-text-3" id="text-h:3D31DF62-5758-435F-9A5C-D264606DA836">
+<p>
+The first important structure we use is the <code>Game</code> interface. To define a particular problem to solve, you must implement this interface.
+</p>
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.<span class="org-constant">adversarial</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">List</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">interface</span> <span class="org-type">Game</span>&lt;<span class="org-type">STATE</span>, <span class="org-type">ACTION</span>, <span class="org-type">PLAYER</span>&gt; {
+
+        <span class="org-type">STATE</span> <span class="org-function-name">getInitialState</span>();
+        <span class="org-type">PLAYER</span>[] <span class="org-function-name">getPlayers</span>();
+        <span class="org-type">PLAYER</span> <span class="org-function-name">getPlayer</span>(<span class="org-type">STATE</span> <span class="org-variable-name">state</span>);
+        <span class="org-type">List</span>&lt;<span class="org-type">ACTION</span>&gt; <span class="org-function-name">getActions</span>(<span class="org-type">STATE</span> <span class="org-variable-name">state</span>);
+        <span class="org-type">STATE</span> <span class="org-function-name">getResult</span>(<span class="org-type">STATE</span> <span class="org-variable-name">state</span>, <span class="org-type">ACTION</span> <span class="org-variable-name">action</span>);
+        <span class="org-type">boolean</span> <span class="org-function-name">isTerminal</span>(<span class="org-type">STATE</span> <span class="org-variable-name">state</span>);
+        <span class="org-type">double</span> <span class="org-function-name">getUtility</span>(<span class="org-type">STATE</span> <span class="org-variable-name">state</span>, <span class="org-type">PLAYER</span> <span class="org-variable-name">player</span>);
+}
+</pre>
+</div>
+
+<p>
+This interface is parametric: its definition relies on the type of the states, the type of the actions and the type of the players.
+</p>
+
+<p>
+This interface defines a game as stated in AIMA chapter 5:
+</p>
+<ul class="org-ul">
+<li><code>getInitialState</code> returns the initial state of the game,</li>
+<li><code>getPlayers</code> returns the set of players (usually two, like <code>0</code> and <code>1</code>, or <code>max</code> and <code>min</code>),</li>
+<li><code>getPlayer</code> returns the active player of a given state,</li>
+<li><code>getActions</code> returns the list of possible actions for a given state,</li>
+<li><code>getResult</code> returns the state resulting from performing a given action to a given state,</li>
+<li><code>isTerminal</code> checks if a state is terminal,</li>
+<li><code>getUtility</code> return the utility value of a given state.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-h:ABA78D66-B1C4-46F8-BBD0-779BD788E15D" class="outline-3">
+<h3 id="h:ABA78D66-B1C4-46F8-BBD0-779BD788E15D"><a id="org230c18d"></a>An example of game modeling</h3>
+<div class="outline-text-3" id="text-h:ABA78D66-B1C4-46F8-BBD0-779BD788E15D">
+<p>
+To be more concrete, let's take an example of a simple game, the <a href="https://en.wikipedia.org/wiki/Nim">Nim Game</a> (more precisely <a href="https://en.wikipedia.org/wiki/Nim#The_subtraction_game_S.281.2C_2.2C_._._..2C_k.29">Subtraction Game</a>):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.adversarial.<span class="org-constant">nim</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">fr</span>.<span class="org-constant">emse</span>.<span class="org-constant">ai</span>.<span class="org-constant">adversarial</span>.<span class="org-type">Game</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">ArrayList</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">List</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">NimGame</span> <span class="org-keyword">implements</span> <span class="org-type">Game</span>&lt;<span class="org-type">List</span>&lt;<span class="org-type">Integer</span>&gt;, <span class="org-type">Integer</span>, <span class="org-type">Integer</span>&gt; {
+
+    <span class="org-keyword">public</span> <span class="org-keyword">final</span> <span class="org-keyword">static</span> <span class="org-type">Integer</span>[] <span class="org-variable-name">players</span> = {0, 1};
+    <span class="org-keyword">public</span> <span class="org-keyword">final</span> <span class="org-keyword">static</span> <span class="org-type">List</span>&lt;<span class="org-type">Integer</span>&gt; <span class="org-variable-name">initialState</span> = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">Integer</span>&gt;();
+
+    <span class="org-keyword">public</span> <span class="org-function-name">NimGame</span>(<span class="org-type">int</span> <span class="org-variable-name">size</span>) {
+        initialState.add(0);
+        initialState.add(size);
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">List</span>&lt;<span class="org-type">Integer</span>&gt; <span class="org-function-name">getInitialState</span>() {
+        <span class="org-keyword">return</span> initialState;
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">Integer</span>[] <span class="org-function-name">getPlayers</span>() {
+        <span class="org-keyword">return</span> players;
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">Integer</span> <span class="org-function-name">getPlayer</span>(<span class="org-type">List</span>&lt;<span class="org-type">Integer</span>&gt; <span class="org-variable-name">state</span>) {
+        <span class="org-keyword">return</span> state.get(0);
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">List</span>&lt;<span class="org-type">Integer</span>&gt; <span class="org-function-name">getActions</span>(<span class="org-type">List</span>&lt;<span class="org-type">Integer</span>&gt; <span class="org-variable-name">state</span>) {
+        <span class="org-type">ArrayList</span>&lt;<span class="org-type">Integer</span>&gt; <span class="org-variable-name">actions</span> = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">Integer</span>&gt;();
+        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 1; i &lt;= Math.min(3, state.get(1)); i++)
+            actions.add(i);
+        <span class="org-keyword">return</span> actions;
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">List</span>&lt;<span class="org-type">Integer</span>&gt; <span class="org-function-name">getResult</span>(<span class="org-type">List</span>&lt;<span class="org-type">Integer</span>&gt; <span class="org-variable-name">state</span>, <span class="org-type">Integer</span> <span class="org-variable-name">action</span>) {
+        <span class="org-type">ArrayList</span>&lt;<span class="org-type">Integer</span>&gt; <span class="org-variable-name">newState</span> = <span class="org-keyword">new</span> <span class="org-type">ArrayList</span>&lt;<span class="org-type">Integer</span>&gt;();
+        newState.add(1 - state.get(0));
+        newState.add(state.get(1) - action);
+        <span class="org-keyword">return</span> newState;
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">boolean</span> <span class="org-function-name">isTerminal</span>(<span class="org-type">List</span>&lt;<span class="org-type">Integer</span>&gt; <span class="org-variable-name">state</span>) {
+        <span class="org-keyword">return</span> state.get(1) == 0;
+    }
+
+    <span class="org-c-annotation">@Override</span>
+    <span class="org-keyword">public</span> <span class="org-type">double</span> <span class="org-function-name">getUtility</span>(<span class="org-type">List</span>&lt;<span class="org-type">Integer</span>&gt; <span class="org-variable-name">state</span>, <span class="org-type">Integer</span> <span class="org-variable-name">player</span>) {
+        <span class="org-keyword">if</span> (state.get(0) == 1 - player) {
+            <span class="org-keyword">if</span> (state.get(1) == 1)
+                <span class="org-keyword">return</span> <span class="org-constant">Double</span>.POSITIVE_INFINITY;
+            <span class="org-keyword">else</span> <span class="org-keyword">if</span> (((state.get(1) - 1) % 4) == 0)
+                <span class="org-keyword">return</span> 1;
+            <span class="org-keyword">else</span>
+                <span class="org-keyword">return</span> -1;
+        } <span class="org-keyword">else</span> {
+            <span class="org-keyword">if</span> (state.get(1) == 1)
+                <span class="org-keyword">return</span> <span class="org-constant">Double</span>.NEGATIVE_INFINITY;
+            <span class="org-keyword">else</span> <span class="org-keyword">if</span> (((state.get(1) - 1) % 4) == 0)
+                <span class="org-keyword">return</span> -1;
+            <span class="org-keyword">else</span>
+                <span class="org-keyword">return</span> 1;
+        }
+    }
+}
+</pre>
+</div>
+
+<p>
+In this game, two players (represented by <code>Integer</code> values, <code>0</code> and <code>1</code>) alternatively pick 1, 2 or 3 sticks from a pool of sticks. The player who removes the last stick from the pool loses the game. Here the state of the game is represented by a <code>List&lt;Integer&gt;</code>, with first cell containing the player, and the second cell containing the number of remaining stick. Actions are represented by <code>Integer</code> values, i.e. the number of sticks removed by the player.
+</p>
+
+<p>
+Look carefully at this example. The rationale behing the utility function is subject to your investigation&#x2026;
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-h:3DED575E-B92F-409C-9DFD-DE6D39491B21" class="outline-2">
+<h2 id="h:3DED575E-B92F-409C-9DFD-DE6D39491B21"><a id="org2436f62"></a>Decision making algorithms</h2>
+<div class="outline-text-2" id="text-h:3DED575E-B92F-409C-9DFD-DE6D39491B21">
+<p>
+Playing games against a machine now requires equiping it with proper decision making mechanisms. 
+</p>
+</div>
+
+<div id="outline-h:CA98F0F2-3A51-4E52-B96B-260ECBA674E5" class="outline-3">
+<h3 id="h:CA98F0F2-3A51-4E52-B96B-260ECBA674E5"><a id="org6ef059c"></a>The <code>AdversarialSearch</code> interface</h3>
+<div class="outline-text-3" id="text-h:CA98F0F2-3A51-4E52-B96B-260ECBA674E5">
+<p>
+To implement game algorithms, we provide the <code>AdversarialSearch</code> interface:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.<span class="org-constant">adversarial</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">fr</span>.<span class="org-constant">emse</span>.<span class="org-constant">ai</span>.<span class="org-constant">adversarial</span>.<span class="org-constant">core</span>.<span class="org-type">Metrics</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">interface</span> <span class="org-type">AdversarialSearch</span>&lt;<span class="org-type">STATE</span>, <span class="org-type">ACTION</span>&gt; {
+
+        <span class="org-type">ACTION</span> <span class="org-function-name">makeDecision</span>(<span class="org-type">STATE</span> <span class="org-variable-name">state</span>);
+        <span class="org-type">Metrics</span> <span class="org-function-name">getMetrics</span>();
+}
+</pre>
+</div>
+
+<p>
+This interface is used to implement a game solver for a given state type and action type. It requires a method to make decision, i.e. returns an action to perform given a game state. The <code>getMetrics</code> method will be used later on.
+</p>
+</div>
+</div>
+
+<div id="outline-h:5AF96455-BAD5-489A-9495-70D518E79121" class="outline-3">
+<h3 id="h:5AF96455-BAD5-489A-9495-70D518E79121"><a id="org37cffe7"></a>Some implementations of <code>AdversarialSearch</code></h3>
+<div class="outline-text-3" id="text-h:5AF96455-BAD5-489A-9495-70D518E79121">
+<p>
+As to focus on modeling games and analyzing the performances of different algorithms to play them, we provide some already implemented versions of Minimax search, alpha-beta search and iterative deepening Minimax search with alpha-beta pruning.
+</p>
+
+<p>
+Here is the Minimax code:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.<span class="org-constant">adversarial</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">fr</span>.<span class="org-constant">emse</span>.<span class="org-constant">ai</span>.<span class="org-constant">adversarial</span>.<span class="org-constant">core</span>.<span class="org-type">Metrics</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">MinimaxSearch</span>&lt;<span class="org-type">STATE</span>, <span class="org-type">ACTION</span>, <span class="org-type">PLAYER</span>&gt; <span class="org-keyword">implements</span>
+                <span class="org-type">AdversarialSearch</span>&lt;<span class="org-type">STATE</span>, <span class="org-type">ACTION</span>&gt; {
+
+        <span class="org-keyword">private</span> <span class="org-type">Game</span>&lt;<span class="org-type">STATE</span>, <span class="org-type">ACTION</span>, <span class="org-type">PLAYER</span>&gt; <span class="org-variable-name">game</span>;
+        <span class="org-keyword">private</span> <span class="org-type">int</span> <span class="org-variable-name">expandedNodes</span>;
+
+        <span class="org-keyword">public</span> <span class="org-function-name">MinimaxSearch</span>(<span class="org-type">Game</span>&lt;<span class="org-type">STATE</span>, <span class="org-type">ACTION</span>, <span class="org-type">PLAYER</span>&gt; <span class="org-variable-name">game</span>) {
+                <span class="org-keyword">this</span>.game = game;
+        }
+
+        <span class="org-c-annotation">@Override</span>
+        <span class="org-keyword">public</span> <span class="org-type">ACTION</span> <span class="org-function-name">makeDecision</span>(<span class="org-type">STATE</span> <span class="org-variable-name">state</span>) {
+                expandedNodes = 0;
+                <span class="org-type">ACTION</span> <span class="org-variable-name">result</span> = <span class="org-constant">null</span>;
+                <span class="org-type">double</span> <span class="org-variable-name">resultValue</span> = <span class="org-constant">Double</span>.NEGATIVE_INFINITY;
+                <span class="org-type">PLAYER</span> <span class="org-variable-name">player</span> = game.getPlayer(state);
+                <span class="org-keyword">for</span> (<span class="org-type">ACTION</span> <span class="org-function-name">action</span> : game.getActions(state)) {
+                        <span class="org-type">double</span> <span class="org-variable-name">value</span> = minValue(game.getResult(state, action), 
+                                                player);
+                        <span class="org-keyword">if</span> (value &gt; resultValue) {
+                                result = action;
+                                resultValue = value;
+                        }
+                }
+                <span class="org-keyword">return</span> result;
+        }
+
+        <span class="org-keyword">public</span> <span class="org-type">double</span> <span class="org-function-name">maxValue</span>(<span class="org-type">STATE</span> <span class="org-variable-name">state</span>, <span class="org-type">PLAYER</span> <span class="org-variable-name">player</span>) { <span class="org-comment-delimiter">// </span><span class="org-comment">returns an utility</span>
+                                                             <span class="org-comment-delimiter">// </span><span class="org-comment">value</span>
+                expandedNodes++;
+                <span class="org-keyword">if</span> (game.isTerminal(state))
+                        <span class="org-keyword">return</span> game.getUtility(state, player);
+                <span class="org-type">double</span> <span class="org-variable-name">value</span> = <span class="org-constant">Double</span>.NEGATIVE_INFINITY;
+                <span class="org-keyword">for</span> (<span class="org-type">ACTION</span> <span class="org-function-name">action</span> : game.getActions(state))
+                        value = Math.max(value,
+                                        minValue(game.getResult(state, action), 
+                                                 player));
+                <span class="org-keyword">return</span> value;
+        }
+
+        <span class="org-keyword">public</span> <span class="org-type">double</span> <span class="org-function-name">minValue</span>(<span class="org-type">STATE</span> <span class="org-variable-name">state</span>, <span class="org-type">PLAYER</span> <span class="org-variable-name">player</span>) { <span class="org-comment-delimiter">// </span><span class="org-comment">returns an utility</span>
+                                                             <span class="org-comment-delimiter">// </span><span class="org-comment">value</span>
+                expandedNodes++;
+                <span class="org-keyword">if</span> (game.isTerminal(state))
+                        <span class="org-keyword">return</span> game.getUtility(state, player);
+                <span class="org-type">double</span> <span class="org-variable-name">value</span> = <span class="org-constant">Double</span>.POSITIVE_INFINITY;
+                <span class="org-keyword">for</span> (<span class="org-type">ACTION</span> <span class="org-function-name">action</span> : game.getActions(state))
+                        value = Math.min(value,
+                                        maxValue(game.getResult(state, action), 
+                                                 player));
+                <span class="org-keyword">return</span> value;
+        }
+
+        <span class="org-c-annotation">@Override</span>
+        <span class="org-keyword">public</span> <span class="org-type">Metrics</span> <span class="org-function-name">getMetrics</span>() {
+                <span class="org-type">Metrics</span> <span class="org-variable-name">result</span> = <span class="org-keyword">new</span> <span class="org-type">Metrics</span>();
+                result.set(<span class="org-string">"expandedNodes"</span>, expandedNodes);
+                <span class="org-keyword">return</span> result;
+        }
+}
+</pre>
+</div>
+
+<p>
+You can download all the search algorithms and required classes <a href="./chapter5-src.zip">here</a>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-h:05316357-C057-4C0F-AAB2-8FF305A3729E" class="outline-2">
+<h2 id="h:05316357-C057-4C0F-AAB2-8FF305A3729E"><a id="org724a8cd"></a>Playing against the computer</h2>
+<div class="outline-text-2" id="text-h:05316357-C057-4C0F-AAB2-8FF305A3729E">
+<p>
+Our agent is now able to make good decisions, let's now play against it!
+</p>
+
+<p>
+As to do so, we must implement a main program that implement the two-ply game. For instance, for the Nim game, we can use the following code:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">package</span> fr.emse.ai.adversarial.<span class="org-constant">nim</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">fr</span>.<span class="org-constant">emse</span>.<span class="org-constant">ai</span>.<span class="org-constant">adversarial</span>.<span class="org-type">AlphaBetaSearch</span>;
+<span class="org-keyword">import</span> <span class="org-constant">fr</span>.<span class="org-constant">emse</span>.<span class="org-constant">ai</span>.<span class="org-constant">adversarial</span>.<span class="org-type">IterativeDeepeningAlphaBetaSearch</span>;
+<span class="org-keyword">import</span> <span class="org-constant">fr</span>.<span class="org-constant">emse</span>.<span class="org-constant">ai</span>.<span class="org-constant">adversarial</span>.<span class="org-type">MinimaxSearch</span>;
+
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">List</span>;
+<span class="org-keyword">import</span> <span class="org-constant">java</span>.<span class="org-constant">util</span>.<span class="org-type">Scanner</span>;
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">NimGameplay</span> {
+
+    <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">main</span>(<span class="org-type">String</span>[] <span class="org-variable-name">args</span>) {
+        <span class="org-type">NimGame</span> <span class="org-variable-name">game</span> = <span class="org-keyword">new</span> <span class="org-type">NimGame</span>(20);
+        <span class="org-type">MinimaxSearch</span>&lt;<span class="org-type">List</span>&lt;<span class="org-type">Integer</span>&gt;, <span class="org-type">Integer</span>, <span class="org-type">Integer</span>&gt; <span class="org-variable-name">minimaxSearch</span> = 
+            MinimaxSearch.createFor(game);
+        <span class="org-type">AlphaBetaSearch</span>&lt;<span class="org-type">List</span>&lt;<span class="org-type">Integer</span>&gt;, <span class="org-type">Integer</span>, <span class="org-type">Integer</span>&gt; <span class="org-variable-name">alphabetaSearch</span> = 
+            AlphaBetaSearch.createFor(game);
+        <span class="org-type">IterativeDeepeningAlphaBetaSearch</span>&lt;<span class="org-type">List</span>&lt;<span class="org-type">Integer</span>&gt;, <span class="org-type">Integer</span>, <span class="org-type">Integer</span>&gt; 
+            <span class="org-variable-name">iterativeDeepeningAlphaBetaSearch</span> = 
+                IterativeDeepeningAlphaBetaSearch.createFor(game, -1, 1, 10);
+        <span class="org-type">List</span>&lt;<span class="org-type">Integer</span>&gt; <span class="org-variable-name">state</span> = game.getInitialState();
+        <span class="org-keyword">while</span> (<span class="org-negation-char">!</span>game.isTerminal(state)) {
+            System.out.println(<span class="org-string">"======================"</span>);
+            System.out.println(state);
+            <span class="org-type">int</span> <span class="org-variable-name">action</span> = -1;
+            <span class="org-keyword">if</span> (state.get(0) == 0) {
+                <span class="org-comment-delimiter">//</span><span class="org-comment">human</span>
+                <span class="org-type">List</span>&lt;<span class="org-type">Integer</span>&gt; <span class="org-variable-name">actions</span> = game.getActions(state);
+                <span class="org-type">Scanner</span> <span class="org-variable-name">in</span> = <span class="org-keyword">new</span> <span class="org-type">Scanner</span>(System.in);
+                <span class="org-keyword">while</span> (<span class="org-negation-char">!</span>actions.contains(action)) {
+                    System.out.println(<span class="org-string">"Human player, what is your action?"</span>);
+                    action = in.nextInt();
+                }
+            } <span class="org-keyword">else</span> {
+                <span class="org-comment-delimiter">//</span><span class="org-comment">machine</span>
+                System.out.println(<span class="org-string">"Machine player, what is your action?"</span>);
+                action = minimaxSearch.makeDecision(state);
+                System.out.println(<span class="org-string">"Metrics for Minimax : "</span> + 
+                   minimaxSearch.getMetrics());
+                alphabetaSearch.makeDecision(state);
+                System.out.println(<span class="org-string">"Metrics for AlphaBeta : "</span> + 
+                   alphabetaSearch.getMetrics());
+                iterativeDeepeningAlphaBetaSearch.makeDecision(state);
+                System.out.println(<span class="org-string">"Metrics for IDAlphaBetaSearch : "</span> + 
+                   iterativeDeepeningAlphaBetaSearch.getMetrics());
+            }
+            System.out.println(<span class="org-string">"Chosen action is "</span> + action);
+            state = game.getResult(state, action);
+        }
+        System.out.print(<span class="org-string">"GAME OVER: "</span>);
+        <span class="org-keyword">if</span> (state.get(0) == 0)
+            System.out.println(<span class="org-string">"Human wins!"</span>);
+        <span class="org-keyword">else</span>
+            System.out.println(<span class="org-string">"Machine wins!"</span>);
+
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-h:A0429098-91CB-4A96-8E1E-3E4FEA1C9B50" class="outline-2">
+<h2 id="h:A0429098-91CB-4A96-8E1E-3E4FEA1C9B50"><a id="org43f385e"></a>Exercises</h2>
+<div class="outline-text-2" id="text-h:A0429098-91CB-4A96-8E1E-3E4FEA1C9B50">
+</div>
+
+<div id="outline-h:9B4582C9-0220-44B8-B50A-382BEDAC8D25" class="outline-3 exo">
+<h3 id="h:9B4582C9-0220-44B8-B50A-382BEDAC8D25"><a id="orgd83ea1f"></a>Exercise 3</h3>
+<div class="outline-text-3" id="text-h:9B4582C9-0220-44B8-B50A-382BEDAC8D25">
+<p>
+Model and implement the <a href="https://en.wikipedia.org/wiki/Tic-tac-toe">tic-tac-toe</a> game. Compare the performance of the different provided algorithms.
+</p>
+</div>
+</div>
+
+<div id="outline-h:F35B6A5A-4972-4CF4-8356-3F0915F29250" class="outline-3 exo">
+<h3 id="h:F35B6A5A-4972-4CF4-8356-3F0915F29250"><a id="org40b1b60"></a>Exercise 4</h3>
+<div class="outline-text-3" id="text-h:F35B6A5A-4972-4CF4-8356-3F0915F29250">
+<p>
+Model and implement the <a href="https://en.wikipedia.org/wiki/Connect_Four">Connect Four</a> game. Compare the performance of the different provided algorithms.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Gauthier Picard</p>
+<p class="email">Email: <a href="mailto:picard@emse.fr">picard@emse.fr</a></p>
+<p class="date">Created: 2019-04-03 Wed 08:36</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

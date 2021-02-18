@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-09-13 Fri 14:22 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Artificial Intelligence</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Gauthier Picard" />
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/hideshow.js"></script>
+<script type="text/javascript" src="styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Artificial Intelligence
+<br>
+<span class="subtitle">MINES Saint-Etienne</span>
+</h1>
+
+<div id="outline-description" class="outline-2">
+<h2 id="description"><a id="org6adfdd4"></a>General description</h2>
+<div class="outline-text-2" id="text-description">
+</div>
+
+<div id="outline-context-and-motivation" class="outline-3">
+<h3 id="context-and-motivation"><a id="orgaa73872"></a>Context and motivation</h3>
+<div class="outline-text-3" id="text-context-and-motivation">
+<p>
+The digital world opens many challenges that concern, automated reasoning on the accessible sources of heterogeneous data, and the management of the complexity, heterogeneity and dynamics of the systems operating in this world by increasing their decision autonomy. Currently, Artificial Intelligence (AI) is one of the pillars of computer science that offers models, methods and generic technologies to tackle these challenges.
+</p>
+
+<p>
+AI ​​is a domain in which sources of inspiration from different fields (biology, economics, computer science, etc.) are put in synergy. Beyond this multidisciplinary approach, this area is a source of open-mindedness for every generalist engineer. Moreover, AI ​​is a producer of field techniques and technologies that are increasingly used in the industrial world in multiple applications (banking, logistics, games, medicine, education, robotics, defense, etc.).
+</p>
+</div>
+</div>
+
+<div id="outline-educational-objectives" class="outline-3">
+<h3 id="educational-objectives"><a id="org8bff3db"></a>Educational objectives</h3>
+<div class="outline-text-3" id="text-educational-objectives">
+<p>
+This AI course follows a <i>pragmatic approach</i> which faces the problem solving and the design of intelligent systems, and is many based on the renown AIMA book from Russell &amp; Norvig<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. 
+</p>
+
+
+<p>
+The AI course aims at <i>making accessible the ideas</i> that have emerged over the last 50 years of application of AI techniques (few formalism, pseudo-code) and show <i>how these ideas are disseminated</i> in current computer systems. It also expose the <i>multi-disciplinary nature of the disciplines</i> at the intersection of many disciplines and techniques which are applicable in many areas.
+</p>
+
+<p>
+The students will understand and master the theories and technologies to develop intelligent agents, i.e. systems with (i) <i>problem solving</i>, (ii) <i>reasoning</i> and (iii) <i>learning</i> capabilities to perceive and act in an open and complex world. They will also learn what are the application and impact of such techniques in different domains. They will master tools and methodologies to integrate different approaches and develop intelligent systems.
+</p>
+</div>
+</div>
+
+<div id="outline-structure" class="outline-3">
+<h3 id="structure"><a id="orgdc1a1d2"></a>Structure</h3>
+<div class="outline-text-3" id="text-structure">
+<p>
+The AI course (GP) is <i>160h-long</i> and is divided in 9 units (UP) over 2 semesters: 
+</p>
+
+<ul class="org-ul">
+<li>Semester 1:
+<ul class="org-ul">
+<li>UP1 – AI Society I (Overview and visions) [9h]</li>
+<li>UP2 – AI Basics I (Problem Solving) [18h]</li>
+<li>UP3 – AI Basics II (Knowledge Representation and Reasoning) [21h]</li>
+<li>UP4 – AI Practice and Technos I (Simulation and Artificial Life) [15h]</li>
+<li>UP5 – AI Practice and Technos II (Advanced Reasoning) [15h]</li>
+</ul></li>
+<li>Semester 2:
+<ul class="org-ul">
+<li>UP6 – AI Society II (Issues, Impacts and Applications) [9h]</li>
+<li>UP7 – AI Basics III (Machine Learning) [30h]</li>
+<li>UP8 – AI Practice and Technos III (Interacting with humans and real world) [15h]</li>
+<li>UP9 – AI Practice and Technos IV (Integrating and Engineering Intelligent Systems) [24h]</li>
+</ul></li>
+</ul>
+
+
+<div id="org2b37beb" class="figure">
+<p><object type="image/svg+xml" data="./images/organisation.svg" class="org-svg" alt="organisation" width="400px">
+Sorry, your browser does not support SVG.</object>
+</p>
+<p><span class="figure-number">Figure 1: </span>Grain organization</p>
+</div>
+
+<p>
+Each unit consists in several atomic grains (AG) which correspond to one or two chapters of AIMA or other text book/lecture notes. Every AG (except some introductory or integration grains) is implemented using the following scheme (cf. Figure above) : reading &rarr; lecture  &rarr; tutorial  &rarr; reading/homework  &rarr; tutorial  &rarr; pratical work  &rarr; etc.
+</p>
+</div>
+</div>
+
+
+<div id="outline-pre-requisites" class="outline-3">
+<h3 id="pre-requisites"><a id="orgef9d8e0"></a>Pre-requisites</h3>
+<div class="outline-text-3" id="text-pre-requisites">
+<p>
+Students should have prior skills in algorithmics, procedural programming, object-oriented programming and logics. Python and Java programming languages will be used.
+</p>
+</div>
+</div>
+
+<div id="outline-evaluation" class="outline-3">
+<h3 id="evaluation"><a id="orgfd0632c"></a>Evaluation</h3>
+<div class="outline-text-3" id="text-evaluation">
+<p>
+Students will be evaluated using 2 terms:
+</p>
+<ul class="org-ul">
+<li>Continuous evaluation using homework or exercises developed during/between tutorials</li>
+<li>review of reports about chosen topics</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-overview" class="outline-2">
+<h2 id="overview"><a id="org2fc3c95"></a>UP1 (Overview)</h2>
+<div class="outline-text-2" id="text-overview">
+<p>
+The introduction presents an historical overview, sharing a will to make systems that are recognized as "intelligent agents" by their ability to provide adequate responses to complex situation decisions. This area is decomposed into multiple sub-disciplines of computer science, as we shall see throughout the module. These areas relate to various aspects of "intelligence": solve, reason, learn, decide and cooperate. We also identify societal, industrial and human perspectives related to the development of these technologies. We will discuss and highlight ethical issues related to the growing presence of AI in everyday life. Finally, key applications of the IA will be discussed and presented at seminars by specialized speakers, from the industrial or academic world.
+</p>
+</div>
+
+<div id="outline-introduction" class="outline-3">
+<h3 id="introduction"><a id="org2df287c"></a>Introduction (3h)</h3>
+<div class="outline-text-3" id="text-introduction">
+<p>
+This introduction shows a historical overview where we share a will to make systems that are recognized as "intelligent agents" by their ability to make an adequate response to complex situation decisions. This area is decomposed into multiple sub-disciplines of computer science, as we shall see throughout the module. These areas relate to various aspects of "intelligence": solve, reason, learn, decide and cooperate.
+</p>
+
+<ul class="org-ul">
+<li><a href="./chapter01.pdf">Slides</a> <a href="./chapter02.pdf">Slides</a></li>
+<li>References: Chapters 1-2 of AIMA</li>
+<li>Duration: 3h</li>
+<li>Mode: Lecture (3h)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-seminars" class="outline-3">
+<h3 id="seminars"><a id="orgde93edf"></a>Seminars (6h)</h3>
+<div class="outline-text-3" id="text-seminars">
+<p>
+These collection of seminars will focus on AI history, AI in society and Ethics
+</p>
+
+<ul class="org-ul">
+<li>Duration: 4 x 1h30</li>
+<li>Mode: Seminar (1h + 30 min discussion)</li>
+<li>Evaluation : Report on a chosen AI-related topics</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-problem-solving" class="outline-2">
+<h2 id="problem-solving"><a id="orgfa8bf90"></a>UP2 (Solving)</h2>
+<div class="outline-text-2" id="text-problem-solving">
+<p>
+This modules focuses on automatic decision methods for deciding which actions to carry out when it is necessary to think of several moves in advance, since a single action is not enough to achieve the objective, as in a game of chess. The module is divided into 3 sections : 
+</p>
+<ul class="org-ul">
+<li>Solving Problems by Searching (DFS, BFS, A*, Optimization)</li>
+<li>Adversarial Search (minimax, alpha-beta)</li>
+<li>Constraint Satisfaction Problems (CSP, COP, backtrack , propagation, arc-consistency)</li>
+</ul>
+</div>
+
+
+<div id="outline-searching" class="outline-3">
+<h3 id="searching"><a id="orgce87e03"></a>Solving Problems by Searching (6h)</h3>
+<div class="outline-text-3" id="text-searching">
+<p>
+This chapter describes one kind of goal-based agent called a problem-solving agent. Problem-solving agents use atomic representations &#x2013;that is, states of the world are considered as wholes, with no internal structure visible to the problem­solving algorithms.
+</p>
+
+<ul class="org-ul">
+<li><a href="./chapter03.pdf">Slides</a></li>
+<li><a href="./search/index.html">Lab</a>, <a href="./search/chapter3-src.zip">provided source code</a></li>
+<li>References: <a href="http://www.pearsonhighered.com/samplechapter/0136042597.pdf">Chapter 3 of AIMA</a></li>
+<li>Language/Technology: Java</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-adversarial" class="outline-3">
+<h3 id="adversarial"><a id="org363a66b"></a>Adversarial Search (6h)</h3>
+<div class="outline-text-3" id="text-adversarial">
+<p>
+In this chapter we cover competitive environments, in which the agents' goals are in conflict, giving rise to adversarial search problems-often known as games.
+</p>
+
+<ul class="org-ul">
+<li><a href="./chapter05.pdf">Slides</a></li>
+<li><a href="./adversarial/index.html">Lab</a>, <a href="./adversarial/chapter5-src.zip">provided source code</a></li>
+<li>References: Chapter 5 of AIMA</li>
+<li>Language/Technology: Java</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-constraints" class="outline-3">
+<h3 id="constraints"><a id="orgbf35a8f"></a>Constraint Satisfaction Problems (6h)</h3>
+<div class="outline-text-3" id="text-constraints">
+<p>
+This chapter describes a way to solve a wide variety of problems more efficiently. We use a factored representation for each state: a set of variables, each of which has a value. A problem is solved when each variable has a value that satisfies all the constraints on the variable. A problem described this way is called a constraint satisfaction problem, or CSP.
+</p>
+
+<ul class="org-ul">
+<li><a href="./chapter06.pdf">Slides</a></li>
+<li><a href="./csp/index.html">Lab</a>, <a href="./csp/chapter6-src.zip">provided source code</a></li>
+<li>References: <a href="http://aima.cs.berkeley.edu/2nd-ed/newchap05.pdf">Chapter 6 of AIMA</a></li>
+<li>Language/Technology: Java</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-krr" class="outline-2">
+<h2 id="krr"><a id="org6647b5c"></a>UP3 (Reasoning)</h2>
+<div class="outline-text-2" id="text-krr">
+<p>
+This module deals with ways of representing knowledge concerning the environments of intelligent agents and how to reason with this knowledge. It reviews:
+</p>
+<ul class="org-ul">
+<li>Logics-based models (propositional, first-order)</li>
+<li>Reasoning schemes (resolution, inference)</li>
+<li>Extensions (fuzzy logics, modal logics)</li>
+<li>Logic Programming (Prolog)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-simulation" class="outline-2">
+<h2 id="simulation"><a id="org68ad7c9"></a>UP4 (Simulation)</h2>
+<div class="outline-text-2" id="text-simulation">
+<p>
+Digital twin refers to a digital replica of a physical system, processes, people, places, systems and devices that can be used for various purposes. The digital representation allows to monitor and simulate the behaviour of the original system. Two important features characterize a digital twin: (i) a connection between the physical model and the corresponding virtual model or virtual counterpart and (ii) this connection is established by generating real time data using sensors or another type of technology.
+This module deals with a general overview of the numerical simulation domain and focuses on event-based simulation and on the multi-agent based simulation domain. The issues and challenges in modeling, running and evaluating simulations are discussed and different solutions are studied. Use cases will be developed using multi-agent simulation platforms for simulating digital twins in the context of Industry 4.0, Health or Intelligent transportation domains.
+</p>
+</div>
+</div>
+
+<div id="outline-advanced1" class="outline-2">
+<h2 id="advanced1"><a id="org4c8bf00"></a>UP5 (Adv. Reasoning)</h2>
+<div class="outline-text-2" id="text-advanced1">
+<p>
+This module deals with the presentation of advanced knowledge-based reasoning techniques that can be used to make intelligent agents able to evolve in a complex and dynamic world:
+</p>
+<ul class="org-ul">
+<li>Knowledge-based reasoning</li>
+<li>Diagnosis</li>
+<li>Planning and acting</li>
+</ul>
+
+<p>
+For more information and content description: <a href="https://www.emse.fr/~boissier/enseignement/defiia/up5/index.html">https://www.emse.fr/~boissier/enseignement/defiia/up5/index.html</a> 
+</p>
+</div>
+</div>
+
+<div id="outline-applications" class="outline-2">
+<h2 id="applications"><a id="org4bec989"></a>UP6 (Applications)</h2>
+<div class="outline-text-2" id="text-applications">
+<p>
+The goal of this module is to put into perspective the problems of machine learning, the implementation of fundamental techniques of AI in specialized sub-domains, and finally the integration of these different technologies to build intelligent single- or multi-agent systems.
+Students will get an overview of the issues, societal impacts of the use of AI technologies in different application areas relating to, for example, health, the environment, industry, education.
+The contents includes lectures, interventions by professionals in the field (eg ORANGE LABS, RENAULT, ENGIE, QWANT), study of prospective studies from various governmental, associative, or industrial agencies (eg France IA report, Villani report, OPECST report, EU report).
+</p>
+</div>
+</div>
+
+<div id="outline-learning" class="outline-2">
+<h2 id="learning"><a id="org23d59df"></a>UP7 (Learning)</h2>
+<div class="outline-text-2" id="text-learning">
+<p>
+The module gives a theoretical overview of the various forms of machine learning. First, we have a glance at unsupervised techniques that help us understand the data. Then, we focus on various supervised learning systems used in practice such as linear models, non linear models (in particular, neural networks), non parametric models, and support vector machines. We show how ensembles of models can outperform a single model, and we detail the particular case of deep neural networks and deep learning. Finally, we study how agents can learn what to do in the absence of labeled examples of what to do. We see how agents can learn from past experience to change their behavior using reinforcement learning techniques (Q-learning).
+Labs will be performed using python libraries like scikit-learn, pandas or numpy.
+</p>
+</div>
+</div>
+
+<div id="outline-interacting" class="outline-2">
+<h2 id="interacting"><a id="org7376ac4"></a>UP8 (Interacting)</h2>
+<div class="outline-text-2" id="text-interacting">
+<p>
+This module introduces important tools related to human-computer interactions. Human perception is a complex phenomenon that rely on non-linear biological sensors, working in cooperation with the brain. The complexity of the human senses allows us to deal with bad environmental conditions such as crowd noise or illumination variations. In order to interact with humans with efficiency, computers have to mimic these abilities, which implies that they have to take into account the mechanisms involved in the environnement of the interlocutor (ambient noise and light), and the perception mechanisms of humans (sensors and brain parts).
+Topics covered in this course are composed of generalities on modelization of human perception and different tools developed in the last decades:
+</p>
+<ul class="org-ul">
+<li>environment of the interlocutor</li>
+<li>principles of human perception</li>
+<li>natural language processing</li>
+<li>speech recognition</li>
+<li>artificial vision</li>
+<li>voice synthesis</li>
+</ul>
+<p>
+At the end of the course, students will have a better understanding of the main challenges of human-computer interactions. 
+</p>
+</div>
+</div>
+
+<div id="outline-engineering" class="outline-2">
+<h2 id="engineering"><a id="orgc990078"></a>UP9 (Engineering)</h2>
+<div class="outline-text-2" id="text-engineering">
+<p>
+The aim of this module is to provide methods and tools to integrate several technologies presented in the AI Courses in order to develop intelligent systems able to perceive, reason and act in the physical world, or interact with other systems or humans. The courses will be based on diverse technologies such a multi-agent oriented programming platforms, Personal Assistant - Chatbot (e.g. Alexa, SIRI), robot (e.g. Poppy) as well as the other technologies already presented in the other course units. 
+At the end of this course unit, the students will have methodological and practical skills to develop intelligent systems. They will moreover have knowledge and understanding of the challenges raised by the development of intelligent systems.
+</p>
+
+<p>
+For more information and content description: <a href="https://www.emse.fr/~boissier/enseignement/defiia/up9/index.html">https://www.emse.fr/~boissier/enseignement/defiia/up9/index.html</a>
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">References </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara">S.J. Russell and P. Norvig. Artificial Intelligence - A Modern Approach. Pearson Education, 2012.</div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="author">Author: Gauthier Picard</p>
+<p class="email">Email: <a href="mailto:picard@emse.fr">picard@emse.fr</a></p>
+<p class="date">Created: 2019-09-13 Fri 14:22</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
