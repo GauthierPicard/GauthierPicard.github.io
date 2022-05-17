@@ -243,7 +243,7 @@ a:hover {
 @media(min-width:768px) {
     .intro {
         /*height: 100%;*/
-        padding: 0;
+        padding: 100;
     }
 
     .intro .intro-body .brand-heading {
