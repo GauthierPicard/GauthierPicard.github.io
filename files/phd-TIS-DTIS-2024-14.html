@@ -1,0 +1,304 @@
+<!DOCTYPE html> 
+<html lang="en-US" xml:lang="en-US" > 
+<head><title>Approximating cost structures in decentralized auctions and optimization for multi-agent task
+allocation
+PhD Proposal</title> 
+<meta  charset="utf-8" /> 
+<meta name="generator" content="TeX4ht (https://tug.org/tex4ht/)" /> 
+<meta name="viewport" content="width=device-width,initial-scale=1" /> 
+<link rel="stylesheet" type="text/css" href="phd-TIS-DTIS-2024-14.css" /> 
+<meta name="src" content="phd-TIS-DTIS-2024-14.tex" /> 
+</head><body 
+>
+   <div class="maketitle">
+                                                                                            
+                                                                                            
+                                                                                            
+                                                                                            
+
+<h2 class="titleHead">Approximating cost structures in decentralized auctions and
+optimization for multi-agent task allocation<br /><br />
+PhD Proposal</h2>
+<div class="author" ><span 
+class="ecrm-1200">ONERA, Toulouse, France</span></div><br />
+<div class="date" ><span 
+class="ecrm-1200">February 2024</span></div>
+   </div>
+   <h5 class="likesubsubsectionHead"><a 
+ id="x1-1000"></a>Keywords</h5>
+<!--l. 28--><p class="noindent" >Multi-agent systems, auctions, coordination, approximate bidding, reinforcement learning
+</p><!--l. 30--><p class="noindent" >
+</p>
+   <h3 class="likesectionHead"><a 
+ id="x1-2000"></a>Context and Motivations</h3>
+<!--l. 32--><p class="noindent" >In the context of multi-robot or multi-vehicle applications, such as search-and-rescue, urban UAV traﬃc
+management, or multi-agent pick-up and delivery, coordination is a key element that provides a
+multi-perspective and multi-skill approach to problems hardly covered by single robots. Yet, from the
+performance viewpoint, optimizing resource usage, mission duration and quality, coordination is a hard
+problem. In fact, when (semi-)autonomous agents have to decide which tasks to fulﬁll, which path to follow or
+which multi-agent action to perform, one has to solve hard combinatorial problems such as task allocation
+<span class="cite">[<a 
+href="#XShehory1998">12</a>]</span>, resource allocation <span class="cite">[<a 
+href="#XChevaleyre2006">2</a>]</span>, multi-agent pathﬁnding <span class="cite">[<a 
+href="#XStern2021">14</a>]</span> or multi-agent trajectory repair <span class="cite">[<a 
+href="#XPicard2022">9</a>]</span>. Such problems
+can be solved using a classical centralized approach, such as combinatorial auctions or mathematical
+programming <span class="cite">[<a 
+href="#XShoham2008">13</a>]</span>.
+</p><!--l. 34--><p class="indent" >   However, in the context of missions where the decisions might be decentralized to (i) improve robustness
+to disconnections or (ii) improve reactiveness (without waiting for a central authority to make the decision),
+decentralizing such decision-making is crucial. Moreover, these algorithms strongly rely on the capability for
+agents to bid over items (tasks/actions/resources/etc.) or bundle of items. In classical auctions or
+mathematical programming approaches, this bidding requires to be able to valuate each combination
+(or some of them) of items, or to use more compact representations of sets of interdependent
+items <span class="cite">[<a 
+href="#XCramton2005">4</a>]</span>. This information may take the form of large tables or graphs, may be too large to
+be computed at fast pace or to be exchanged within unreliable communication infrastructure.
+Moreover, in the case of multi-agent tasks (requiring several agents to be performed), as in CBGA
+algorithm <span class="cite">[<a 
+href="#XBrunet2008">1</a>]</span>, or in the case of multi-mode tasks (tasks that can be fulﬁlled in diﬀerent manners)
+as in MM-CBGA algorithm <span class="cite">[<a 
+href="#XPicard2023">10</a>]</span>, data structures are becoming even larger (to process and to
+communicate).
+</p><!--l. 36--><p class="indent" >   Besides auctions, such table-based decision representation is also at the core of some distributed
+optimization algorithms (DCOP) <span class="cite">[<a 
+href="#XFioretto2018">6</a>]</span>, especially inference-based ones, such as DPOP or Max-Sum, and we aim
+at providing generic theoretical tools to use both in auctions and DCOPs domains.
+</p><!--l. 38--><p class="indent" >   In the domain of reinforcement learning, such an approximation and compacting problem has been
+handled using deep neural networks or other approximation functions to represent and functionally
+                                                                                            
+                                                                                            
+approximate Q-tables for instance <span class="cite">[<a 
+href="#XFrancoisLavet2018">7</a>]</span>. In the domain of multi-agent pick and delivery, attention models have
+been used to form collectives and allocate tasks <span class="cite">[<a 
+href="#XFenoy2024">5</a>]</span>. We aim at exploring the use of such techniques in the
+context of auctions and DCOPs.
+</p><!--l. 40--><p class="noindent" >
+</p>
+   <h3 class="likesectionHead"><a 
+ id="x1-3000"></a>Objectives</h3>
+<!--l. 42--><p class="noindent" >The idea of this thesis is thus to bring approximation to bidding to implement decentralized auctions and
+distributed inference with good reactiveness and low communication load. The idea is to ﬁrst devise
+approximation schemes for mono-agent mono-mode tasks decentralized allocation, in the consensus-based
+bundle allocation framework (CBBA) <span class="cite">[<a 
+href="#XChoi2009">3</a>]</span>, and then to extend the models for multi-agent tasks (CBGA) and
+multi-mode tasks (MM-CBGA). In a second time, we will investigate how to implement these approximation
+schemes to the inference-based DCOP framework, in complete (DPOP) and incomplete (Max-Sum) solution
+methods.
+</p><!--l. 44--><p class="indent" >   We previously applied auctions and DCOP domains such as Earth observation <span class="cite">[<a 
+href="#XPicard2022">9</a>, <a 
+href="#XPicard2023">10</a>]</span>, Unmanned Aircraft
+System Traﬃc Management (UTM) <span class="cite">[<a 
+href="#XPicard2022a">8</a>]</span>, and multi-robot missions <span class="cite">[<a 
+href="#XQuinton2022">11</a>]</span>. We thus envision to implement and
+evaluate the theoretical and algorithmic contributions of this thesis to one or more of these application
+domains.
+</p><!--l. 46--><p class="noindent" >
+</p>
+   <h3 class="likesectionHead"><a 
+ id="x1-4000"></a>Hosting institution</h3>
+<!--l. 48--><p class="noindent" >The <span 
+class="ecti-1095">Oﬃce national d’</span><span 
+class="ecti-1095">é</span><span 
+class="ecti-1095">tudes et de recherches a</span><span 
+class="ecti-1095">é</span><span 
+class="ecti-1095">rospatiales </span>(ONERA) is the French national
+aerospace research lab. The PhD student will be hosted at ONERA, Toulouse, France
+(<a 
+href="https://www.onera.fr/en/centers/toulouse" class="url" ><span 
+class="ectt-1095">https://www.onera.fr/en/centers/toulouse</span></a>), and will have opportunities to visit IIIA-CSIC, in
+Barcelona.
+</p><!--l. 51--><p class="noindent" >
+</p>
+   <h3 class="likesectionHead"><a 
+ id="x1-5000"></a>Collaboration</h3>
+<!--l. 53--><p class="noindent" >The PhD thesis will be jointly supervised by ONERA (Toulouse, France) and IIIA-CSIC (Barcelona,
+Spain).
+</p><!--l. 55--><p class="noindent" >
+</p>
+   <h3 class="likesectionHead"><a 
+ id="x1-6000"></a>Supervisors</h3>
+     <ul class="itemize1">
+     <li class="itemize">
+     <!--l. 58--><p class="noindent" >Pr. Gauthier Picard, Directeur de recherche, ONERA
+     </p></li>
+     <li class="itemize">
+     <!--l. 59--><p class="noindent" >Dr. Filippo Bistaﬀa, Tenured Researcher, IIIA-CSIC
+     </p></li>
+     <li class="itemize">
+                                                                                            
+                                                                                            
+     <!--l. 60--><p class="noindent" >Pr. Juan A. Rodríguez-Aguilar, Research Professor, IIIA-CSIC</p></li></ul>
+<!--l. 63--><p class="noindent" >
+</p>
+   <h3 class="likesectionHead"><a 
+ id="x1-7000"></a>Proﬁle and skills required</h3>
+<!--l. 65--><p class="noindent" >Master-level with strong skills in AI, optimization, multi-agent, RL
+</p><!--l. 67--><p class="noindent" >
+</p>
+   <h3 class="likesectionHead"><a 
+ id="x1-8000"></a>How to apply</h3>
+<!--l. 69--><p class="noindent" >Applications (CV, motivation letter, referees, and grades) should be sent to <a 
+href="mailto:gauthier.picard@onera.fr,juanantonio.rodriguez@csic.es,filippo.bistaffa@iiia.csic.es?subject=Application%20to%20PhD%20position%20TIS-DTIS-2024-14%20" ><span 
+class="ectt-1095">gauthier.picard@onera.fr,</span>
+<span 
+class="ectt-1095">juanantonio.rodriguez@csic.es, filippo.bistaffa@iiia.csic.es</span></a> with the subject <span 
+class="ectt-1095">&#x0022;Application to</span>
+<span 
+class="ectt-1095">PhD position TIS-DTIS-2024-14&#x0022;</span>.
+</p><!--l. 71--><p class="noindent" >
+</p>
+   <h3 class="likesectionHead"><a 
+ id="x1-9000"></a>About Toulouse</h3>
+<!--l. 73--><p class="noindent" >Beyond its iconic rose-hued brick architecture, Toulouse oﬀers a unique blend of intellectual stimulation,
+cultural ﬂair, and a relaxed atmosphere that’s perfect for thriving during your PhD journey.
+</p><!--l. 75--><p class="indent" >   Renowned for its top-ranked universities and research institutions, particularly in aerospace and space,
+Toulouse is a hub for cutting-edge knowledge. You’ll have opportunities to collaborate with brilliant minds,
+access state-of-the-art facilities, and contribute to groundbreaking research that pushes the boundaries of your
+ﬁeld.
+</p><!--l. 77--><p class="indent" >   Toulouse boasts a dynamic student life, where you can connect with a diverse international community
+and explore the surrounding vineyards and medieval towns on weekend getaways. With its aﬀordable cost of
+living, excellent public transportation, and abundance of green spaces, Toulouse oﬀers a comfortable and
+enjoyable environment to call home during your studies.
+</p><!--l. 79--><p class="indent" >   More info here: <a 
+href="https://en.wikipedia.org/wiki/Toulouse" class="url" ><span 
+class="ectt-1095">https://en.wikipedia.org/wiki/Toulouse</span></a>
+</p><!--l. 81--><p class="noindent" >
+</p>
+   <h3 class="likesectionHead"><a 
+ id="x1-10000"></a>Important dates</h3>
+     <ul class="itemize1">
+     <li class="itemize">
+     <!--l. 84--><p class="noindent" >Application deadline: April 1st, 2024
+     </p></li>
+     <li class="itemize">
+     <!--l. 85--><p class="noindent" >Interviews: April 15-22, 2024
+     </p></li>
+     <li class="itemize">
+     <!--l. 86--><p class="noindent" >Final decision: April 30, 2024
+                                                                                            
+                                                                                            
+     </p></li>
+     <li class="itemize">
+     <!--l. 87--><p class="noindent" >Start of PhD study: October 2024 (can be adjusted)</p></li></ul>
+<!--l. 1--><p class="noindent" >
+</p>
+   <h3 class="likesectionHead"><a 
+ id="x1-11000"></a>References</h3>
+<!--l. 1--><p class="noindent" >
+    </p><div class="thebibliography">
+    <p class="bibitem" ><span class="biblabel">
+  [1]<span class="bibsp">   </span></span><a 
+ id="XBrunet2008"></a>Luc Brunet, Han-Lim Choi, and Jonathan How.   Consensus-based auction approaches for
+    decentralized  task  assignment.   In  <span 
+class="ecti-1095">AIAA  Guidance,  Navigation  and  Control  Conference  and</span>
+    <span 
+class="ecti-1095">Exhibit</span>. American Institute of Aeronautics and Astronautics, June 2008.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+  [2]<span class="bibsp">   </span></span><a 
+ id="XChevaleyre2006"></a>Yann Chevaleyre, Paul E. Dunne, Ulrich Endriss, Jérôme Lang, Michel Lemaître, Nicolas
+    Maudet,  J. Padget,  Steve  Phelps,  Juan A.  Rodríguez-Aguilar,  and  Paulo  Sousa.   Issues  in
+    multiagent resource allocation. <span 
+class="ecti-1095">Informatica (Slovenia)</span>, 30:3–31, 2006.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+  [3]<span class="bibsp">   </span></span><a 
+ id="XChoi2009"></a>Han-Lim Choi, L. Brunet, and J.P. How.  Consensus-based decentralized auctions for robust
+    task allocation. <span 
+class="ecti-1095">IEEE Transactions on Robotics</span>, 25(4):912–926, August 2009.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+  [4]<span class="bibsp">   </span></span><a 
+ id="XCramton2005"></a>P. Cramton, Y. Shoham, and Richard Steinberg. <span 
+class="ecti-1095">Combinatorial Auctions</span>. MIT Press, 2005.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+  [5]<span class="bibsp">   </span></span><a 
+ id="XFenoy2024"></a>Adrià Fenoy, Filippo Bistaﬀa, and Alessandro Farinelli. An attention model for the formation
+    of collectives in real-world domains. <span 
+class="ecti-1095">Artiﬁcial Intelligence</span>, 328:104064, March 2024.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+  [6]<span class="bibsp">   </span></span><a 
+ id="XFioretto2018"></a>Ferdinando Fioretto, Enrico Pontelli, and William Yeoh. Distributed constraint optimization
+    problems and applications: A survey. <span 
+class="ecti-1095">Journal of Artiﬁcial Intelligence Research</span>, 61:623–698, March
+    2018.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+  [7]<span class="bibsp">   </span></span><a 
+ id="XFrancoisLavet2018"></a>Vincent François-Lavet, Peter Henderson, Riashat Islam, Marc G. Bellemare, and Joelle
+    Pineau.  An introduction to deep reinforcement learning.  <span 
+class="ecti-1095">Foundations and Trends</span><span 
+class="ecti-1095">® in Machine</span>
+    <span 
+class="ecti-1095">Learning</span>, 11(3–4):219–354, 2018.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+  [8]<span class="bibsp">   </span></span><a 
+ id="XPicard2022a"></a>Gauthier  Picard.   Auction-based  and  distributed  optimization  approaches  for  scheduling
+    observations  in  satellite  constellations  with  exclusive  orbit  portions.    In  <span 
+class="ecti-1095">Proceedings  of  the</span>
+                                                                                            
+                                                                                            
+    <span 
+class="ecti-1095">21st  International  Conference  on  Autonomous  Agents  and  Multiagent  Systems</span>,  AAMAS  ’22,
+    page 1056–1064, Richland, SC, 5 2022. International Foundation for Autonomous Agents and
+    Multiagent Systems.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+  [9]<span class="bibsp">   </span></span><a 
+ id="XPicard2022"></a>Gauthier  Picard.    Trajectory  coordination  based  on  distributed  constraint  optimization
+    techniques  in  unmanned  air  traﬃc  management.    In  <span 
+class="ecti-1095">Proceedings  of  the  21st  International</span>
+    <span 
+class="ecti-1095">Conference  on  Autonomous  Agents  and  Multiagent  Systems</span>,  AAMAS  ’22,  page  1065–1073,
+    Richland, SC, 5 2022. International Foundation for Autonomous Agents and Multiagent Systems.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+ [10]<span class="bibsp">   </span></span><a 
+ id="XPicard2023"></a>Gauthier Picard.  Multi-agent consensus-based bundle allocation for multi-mode composite
+    tasks. In <span 
+class="ecti-1095">Proceedings of the 2023 International Conference on Autonomous Agents and Multiagent</span>
+    <span 
+class="ecti-1095">Systems</span>,  AAMAS  ’23,  page  504–512,  Richland,  SC,  5  2023.  International  Foundation  for
+    Autonomous Agents and Multiagent Systems.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+ [11]<span class="bibsp">   </span></span><a 
+ id="XQuinton2022"></a>Felix Quinton, Christophe Grand, and Charles Lesire.   Communication-preserving bids in
+    market-based task allocation. In <span 
+class="ecti-1095">2022 IEEE/RSJ International Conference on Intelligent Robots</span>
+    <span 
+class="ecti-1095">and Systems (IROS)</span>. IEEE, October 2022.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+ [12]<span class="bibsp">   </span></span><a 
+ id="XShehory1998"></a>Onn Shehory and Sarit Kraus.  Methods for task allocation via agent coalition formation.
+    <span 
+class="ecti-1095">Artiﬁcial Intelligence</span>, 101(1–2):165–200, May 1998.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+ [13]<span class="bibsp">   </span></span><a 
+ id="XShoham2008"></a>Yoav Shoham and Kevin Leyton-Brown.  <span 
+class="ecti-1095">Multiagent Systems: Algorithmic, Game-Theoretic,</span>
+    <span 
+class="ecti-1095">and Logical Foundations</span>. Cambridge University Press, December 2008.
+    </p>
+    <p class="bibitem" ><span class="biblabel">
+ [14]<span class="bibsp">   </span></span><a 
+ id="XStern2021"></a>Roni Stern, Nathan Sturtevant, Ariel Felner, Sven Koenig, Hang Ma, Thayne Walker, Jiaoyang
+    Li, Dor Atzmon, Liron Cohen, T. K. Kumar, Roman Barták, and Eli Boyarski.  Multi-agent
+    pathﬁnding: Deﬁnitions, variants, and benchmarks.  <span 
+class="ecti-1095">Proceedings of the International Symposium</span>
+    <span 
+class="ecti-1095">on Combinatorial Search</span>, 10(1):151–158, September 2021.
+</p>
+    </div>
+    
+</body> 
+</html>
+                                                                                            
+
+
